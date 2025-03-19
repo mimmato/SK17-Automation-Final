@@ -1,6 +1,4 @@
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -34,6 +32,13 @@ public class RegistrationPageObject extends BasePageObject {
     private WebElement regPublicInfoField;
     @FindBy(xpath = "//button[@id='sign-in-button']")
     private WebElement regSignInButton;
+
+
+    @FindBy(xpath = "//div[@class='input-filed has-danger']")
+    private WebElement usernameParentDivDanger;
+    @FindBy(xpath = "//div[@class='input-filed has-success']")
+    private WebElement usernameParentDivSuccess;
+
 
     @FindBy(xpath = "//div[@aria-label='Username taken']")
     private WebElement usernameTakenToast;
@@ -71,9 +76,51 @@ public class RegistrationPageObject extends BasePageObject {
         return randomUsername.substring(0, Math.min(desiredLength, randomUsername.length()));
     }
 
+    public void enterAndValidateUsername(String username) {
+        regUsernameField.clear();
+        regUsernameField.sendKeys(username);
+
+        String enteredUsername = regUsernameField.getAttribute("value");
+        Assert.assertEquals(enteredUsername, username, "Entered username does not match the expected value.");
+
+        Assert.assertTrue(isUsernameSuccess() || isUsernameDanger(), "Username field status is unknown.");
+
+        if (isUsernameSuccess()) {
+            Assert.assertTrue(isUsernameSuccess(), "Username is Valid.");
+        } else if (isUsernameDanger()) {
+            Assert.assertFalse( isUsernameDanger(), "Username is Invalid.");
+        }
+
+    }
+
+    public boolean isUsernameSuccess() {
+        try {
+            WebDriverWait waitUserSuccessMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
+            waitUserSuccessMess.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-success']")));
+            return usernameParentDivSuccess.getAttribute("class").contains("has-success");
+
+        } catch (NoSuchElementException | TimeoutException ex) {
+            return false;  // Return false if the element is not found
+        }
+    }
+
+    public boolean isUsernameDanger() {
+        try {
+            WebDriverWait waitUserDangerMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
+            waitUserDangerMess.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-danger']")));
+            return usernameParentDivDanger.getAttribute("class").contains("has-danger");
+        } catch (NoSuchElementException | TimeoutException ex) {
+            return false;
+        }
+    }
+
     public void cleanRegUsernameField(){
         regUsernameField.clear();
     }
+
+
+
+
 
 
 

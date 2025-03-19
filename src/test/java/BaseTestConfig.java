@@ -35,8 +35,8 @@ public class BaseTestConfig {
     protected void setBeforeMethod() {
         this.webDriver = new ChromeDriver(/*configChromeOptions()*/);
         this.webDriver.manage().window().maximize();
-        this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
-        this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(45));
+        this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20)); // 60 orig
+        this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // 45 orig
     }
 
 //    private ChromeOptions configChromeOptions() {
@@ -51,29 +51,68 @@ public class BaseTestConfig {
         takeScreenshotOnFailure(testResult);
         quitDriver();
     }
-    @AfterSuite
-    protected void delScreenshots() throws IOException{
-        delScreenshotDIR(SCREENSHOTS_DIR);
+//    @AfterSuite
+//    protected void delScreenshots() throws IOException{
+//        System.out.println("Attempting to delete old screenshots...");
+//        delScreenshotDIR(SCREENSHOTS_DIR);
+//    }
+
+//    private void takeScreenshotOnFailure(ITestResult testResult) {
+//        if (ITestResult.FAILURE == testResult.getStatus()) {
+//            try {
+//                TakesScreenshot takeScreenshot = (TakesScreenshot) webDriver;
+//                File screenshot = takeScreenshot.getScreenshotAs(OutputType.FILE);
+//                String testName = testResult.getName() + "_" + Thread.currentThread().threadId();
+//
+//                for (Object param : testResult.getParameters()) {
+//                    if (!param.toString().isEmpty()) {
+//                        testName = testName + param;
+//                    }
+//                }
+//                FileUtils.copyFile(screenshot, new File(SCREENSHOTS_DIR.concat(testName).concat(".jpg")));
+//            } catch (IOException ex) {
+//                System.out.println("Unable to create a screenshot file: " + ex.getMessage());
+//            }
+//        }
+//    }
+private void takeScreenshotOnFailure(ITestResult testResult) {
+    if (webDriver == null) {
+        System.out.println("WebDriver is null, skipping screenshot.");
+        return;
     }
 
-    private void takeScreenshotOnFailure(ITestResult testResult) {
-        if (ITestResult.FAILURE == testResult.getStatus()) {
-            try {
-                TakesScreenshot takeScreenshot = (TakesScreenshot) webDriver;
-                File screenshot = takeScreenshot.getScreenshotAs(OutputType.FILE);
-                String testName = testResult.getName() + "_" + Thread.currentThread().threadId();
+    if (ITestResult.FAILURE == testResult.getStatus()) {
+        try {
 
+            File screenshotDir = new File(SCREENSHOTS_DIR);
+            if (!screenshotDir.exists()) {
+                screenshotDir.mkdirs();
+            }
+
+            TakesScreenshot takeScreenshot = (TakesScreenshot) webDriver;
+            File screenshot = takeScreenshot.getScreenshotAs(OutputType.FILE);
+
+            String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+            String testName = testResult.getName() + "_" + timestamp;
+
+            if (testResult.getParameters() != null) {
                 for (Object param : testResult.getParameters()) {
-                    if (!param.toString().isEmpty()) {
-                        testName = testName + param;
+                    if (param != null && !param.toString().isEmpty()) {
+                        testName = testName + "_" + param;
                     }
                 }
-                FileUtils.copyFile(screenshot, new File(SCREENSHOTS_DIR.concat(testName).concat(".jpg")));
-            } catch (IOException ex) {
-                System.out.println("Unable to create a screenshot file: " + ex.getMessage());
             }
+
+            File destFile = new File(SCREENSHOTS_DIR.concat(testName).concat(".jpg"));
+            FileUtils.copyFile(screenshot, destFile);
+
+            System.out.println("Screenshot saved: " + destFile.getAbsolutePath());
+
+        } catch (IOException ex) {
+            System.out.println("Unable to create a screenshot file: " + ex.getMessage());
         }
     }
+}
 
     protected WebDriver getDriver(){
         return this.webDriver;
@@ -83,7 +122,6 @@ public class BaseTestConfig {
         if (this.webDriver != null) {
             this.webDriver.quit();
             this.webDriver = null;
-            // Assert that the driver has been quit and the reference is now null
             Assert.assertNull(this.webDriver, "WebDriver should be null after quitting.");
         } else {
             System.out.println("WebDriver is null.");
