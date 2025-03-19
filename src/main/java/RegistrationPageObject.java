@@ -112,6 +112,37 @@ public class RegistrationPageObject extends BasePageObject {
             return false;
         }
     }
+
+    public void testValidUsername() {
+
+        String validUser = genRandomUser(20);
+        System.out.println("Testing valid username: " + validUser + " (Length: " + validUser.length() + ")");
+        enterAndValidateUsername(validUser);
+    }
+
+    public void testValidEmail(){
+
+        String validEmail = genRandomEmail(22);
+        System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
+        clearAndEnterEmail(validEmail);
+    }
+
+    public void testValidDOB()  {
+        clearAndEnterDOB("23-07-1993");
+    }
+
+    public void testValidPassword() {
+        clearAndEnterPass("Testing123!");
+    }
+
+    public void testValidPublicInfo() {
+        clearAndEnterPublicInfo("Testing");
+    }
+
+    public void clickSignInButton(){
+        regSignInButton.click();
+    }
+
     public void cleanRegUsernameField(){
         regUsernameField.clear();
     }
@@ -126,11 +157,20 @@ public class RegistrationPageObject extends BasePageObject {
         regEmailField.clear();
         regEmailField.sendKeys(email);
     }
-    public void clearAndEnterDOB(String dob){
+    public void clearAndEnterDOB(String date){
         regBirthDateField.clear();
-        regBirthDateField.click();
+        regBirthDateField.sendKeys(date);
+    }
+    public void clearAndEnterPass(String password){
+        regPasswordField.clear();
+        regPasswordField.sendKeys(password);
+        regConfirmPasswordField.clear();
+        regConfirmPasswordField.sendKeys(password);
+    }
 
-        regBirthDateField.sendKeys(dob);
+    public void clearAndEnterPublicInfo(String text){
+        regPublicInfoField.clear();
+        regPublicInfoField.sendKeys(text);
     }
 
 // email field

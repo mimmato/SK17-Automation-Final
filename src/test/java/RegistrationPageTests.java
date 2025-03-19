@@ -72,16 +72,50 @@ public class RegistrationPageTests extends BaseTestConfig {
         registrationPage.clearAndEnterEmail(validEmail);
     }
     @Test
-    public void testValidDOB(){
+    public void testValidDOB() throws InterruptedException {
         WebDriver driver = getDriver();
         RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
-
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToRegistrationPage();
+        registrationPage.clearAndEnterDOB("23-07-1993");
+    }
 
+    @Test
+    public void testValidPassword() {
+        WebDriver driver = getDriver();
+        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+        BasePageObject basePage = new BasePageObject(driver);
+        basePage.navigateToRegistrationPage();
+        registrationPage.clearAndEnterPass("Testing123!");
+    }
 
+    @Test
+    public void testValidPublicInfo() {
+        WebDriver driver = getDriver();
+        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+        BasePageObject basePage = new BasePageObject(driver);
+        basePage.navigateToRegistrationPage();
+        registrationPage.clearAndEnterPublicInfo("Testing");
+    }
 
-        registrationPage.clearAndEnterDOB(dob);
+    @Test
+    public void happyPathRegInputBugEmailLength() {
+        WebDriver driver = getDriver();
+        BasePageObject basePage = new BasePageObject(driver);
+        basePage.navigateToRegistrationPage();
+        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+        registrationPage.validateFieldsText();
+
+        registrationPage.testValidUsername();
+        registrationPage.testValidEmail();
+        registrationPage.testValidDOB();
+        registrationPage.testValidPassword();
+        registrationPage.testValidPublicInfo();
+        registrationPage.clickSignInButton();
+
+        Assert.assertEquals(registrationPage.isUsernameDanger(), registrationPage.isUsernameSuccess(), "The " + shortUser + " user should be accepted due to feedback message: " +
+                registrationPage.getUsernameDangerMess());
+
     }
 
 
