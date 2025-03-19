@@ -17,7 +17,7 @@ public class HomePageTests extends BaseTestConfig{
         String uri = "/posts/all";
         basePage.openURL(uri);
         boolean isCorrectURL = basePage.isCurrentURLCorrect(uri);
-        Assert.assertTrue(isCorrectURL, "The URL did not match the expected landing page.");
+        Assert.assertTrue(isCorrectURL, "The URL did not match the expected landing page: " + uri);
 
         HomePageObject homePage = new HomePageObject(driver);
 

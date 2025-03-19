@@ -1,5 +1,7 @@
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -7,6 +9,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class BasePageObject {
+
+    @FindBy(id = "nav-link-profile")
+    private WebElement profileLink;
+    @FindBy(id = "nav-link-login")
+    private WebElement loginLink;
+    @FindBy(id = "nav-link-home")
+    private WebElement homeLink;
+    @FindBy(id = "nav-link-new-post")
+    private WebElement newPostLink;
+
 
     public static final String CURRENT_URL = "http://training.skillo-bg.com:4300";
     public final WebDriver webDriver;
@@ -21,7 +33,7 @@ public class BasePageObject {
 
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
         try {
-        wait.until(ExpectedConditions.urlToBe(expectedURL));
+            wait.until(ExpectedConditions.urlToBe(expectedURL));
         } catch (TimeoutException ex) {
             System.out.println("Expected URL: " + expectedURL);
             System.out.println("Current URL: " + webDriver.getCurrentUrl());
@@ -34,6 +46,12 @@ public class BasePageObject {
     public void openURL(String uri) {
         String fullURL = CURRENT_URL + uri;
         webDriver.get(fullURL);
+    }
+
+    public void clickLoginLink() {
+        WebDriverWait loginPageLinkWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(3));
+        loginPageLinkWait.until(ExpectedConditions.elementToBeClickable(this.loginLink));
+        this.loginLink.click();
     }
 }
 
