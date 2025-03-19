@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,13 +18,24 @@ public class HomePageObject extends BasePageObject{
 
     @FindBy(className = "post-feed-container")
     protected List<WebElement> postThumbnails;
+    @FindBy(tagName = "body")
+    protected WebElement bodyScroll;
 
-    public boolean areThreePostsLoaded() {
+    public int checkPostsLoaded() {
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfAllElements(postThumbnails));
 
         System.out.println("Number of posts found: " + postThumbnails.size());
-        return postThumbnails.size() == 3;
+        return postThumbnails.size();
+    }
+
+    public void scrollToLoad(){
+        for (int i = 0 ; i < 15; i++){
+            bodyScroll.sendKeys(Keys.PAGE_DOWN);
+            WebDriverWait scrollWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(5));
+//            scrollWait.until(ExpectedConditions.numberOfElementsToBe("post-feed-container", 6));
+            scrollWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.className("post-feed-container"), postThumbnails.size()));
+        }
     }
 }
 
