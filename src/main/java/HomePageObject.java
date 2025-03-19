@@ -29,13 +29,6 @@ public class HomePageObject extends BasePageObject{
         return postThumbnails.size();
     }
 
-    public void scrollToLoad(){
-        for (int i = 0 ; i < 15; i++){
-            bodyScroll.sendKeys(Keys.PAGE_DOWN);
-            WebDriverWait scrollWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(5));
-//            scrollWait.until(ExpectedConditions.numberOfElementsToBe("post-feed-container", 6));
-            scrollWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.className("post-feed-container"), postThumbnails.size()));
-        }
-    }
+
 }
 

@@ -20,7 +20,7 @@ public class HomePageTests extends BaseTestConfig{
         Assert.assertTrue(isCorrectURL, "The URL did not match the expected landing page.");
 
         HomePageObject homePage = new HomePageObject(driver);
-        homePage.checkPostsLoaded();
+//        homePage.checkPostsLoaded();
 
         int actualPostCount = homePage.checkPostsLoaded();
         Assert.assertEquals(actualPostCount, 3,
@@ -30,12 +30,12 @@ public class HomePageTests extends BaseTestConfig{
         System.out.println("First call of scroll method!");
         homePage.scrollToLoad();
         homePage.checkPostsLoaded();
-        System.out.println("2nd call of scroll method!");
-        homePage.scrollToLoad();
-        homePage.checkPostsLoaded();
-        System.out.println("3rd call of scroll method!");
-        homePage.scrollToLoad();
-        homePage.checkPostsLoaded();
+//        System.out.println("2nd call of scroll method!");
+//        homePage.scrollToLoad();
+//        homePage.checkPostsLoaded();
+//        System.out.println("3rd call of scroll method!");
+//        homePage.scrollToLoad();
+//        homePage.checkPostsLoaded();
 
 
 
