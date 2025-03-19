@@ -6,8 +6,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 public class RegistrationPageObject extends BasePageObject {
@@ -33,16 +31,21 @@ public class RegistrationPageObject extends BasePageObject {
     @FindBy(xpath = "//button[@id='sign-in-button']")
     private WebElement regSignInButton;
 
-
     @FindBy(xpath = "//div[@class='input-filed has-danger']")
     private WebElement usernameParentDivDanger;
     @FindBy(xpath = "//div[@class='input-filed has-success']")
     private WebElement usernameParentDivSuccess;
 
+    public String getUsernameDangerMess(){
+        return usernameParentDivDanger.getText();
+    }
+    public String getUsernameSuccessMess(){
+        return usernameParentDivSuccess.getText();
+    }
+
 
     @FindBy(xpath = "//div[@aria-label='Username taken']")
     private WebElement usernameTakenToast;
-
 
     public void validateFieldsText() {
         String usernamePlaceholder = regUsernameField.getAttribute("placeholder");
@@ -66,19 +69,16 @@ public class RegistrationPageObject extends BasePageObject {
         String signInButtonText = regSignInButton.getText();
         Assert.assertEquals(signInButtonText, "Sign in", "Sign in button text is incorrect: " + signInButtonText);
     }
-
-
-    //<span _ngcontent-lgj-c4="" class="invalid-feedback ng-star-inserted"> Maximum 20 characters! </span>
-    //<span _ngcontent-lgj-c4="" class="invalid-feedback ng-star-inserted"> Minimum 2 characters ! </span>
-
     public String genRandomUser(int desiredLength) {
         String randomUsername = UUID.randomUUID().toString().replace("-", "").substring(0, desiredLength);
         return randomUsername.substring(0, Math.min(desiredLength, randomUsername.length()));
     }
-
-    public void enterAndValidateUsername(String username) {
+    public void clearAndEnterUsername(String username){
         regUsernameField.clear();
         regUsernameField.sendKeys(username);
+    }
+    public void enterAndValidateUsername(String username) {
+        clearAndEnterUsername(username);
 
         String enteredUsername = regUsernameField.getAttribute("value");
         Assert.assertEquals(enteredUsername, username, "Entered username does not match the expected value.");
@@ -92,7 +92,6 @@ public class RegistrationPageObject extends BasePageObject {
         }
 
     }
-
     public boolean isUsernameSuccess() {
         try {
             WebDriverWait waitUserSuccessMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
@@ -103,26 +102,36 @@ public class RegistrationPageObject extends BasePageObject {
             return false;  // Return false if the element is not found
         }
     }
-
     public boolean isUsernameDanger() {
         try {
             WebDriverWait waitUserDangerMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
             waitUserDangerMess.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-danger']")));
+//            return usernameParentDivDanger.getText();
             return usernameParentDivDanger.getAttribute("class").contains("has-danger");
         } catch (NoSuchElementException | TimeoutException ex) {
             return false;
         }
     }
-
     public void cleanRegUsernameField(){
         regUsernameField.clear();
     }
+    public String genRandomEmail(int desiredLength){
+        String domain = "@t.m";
+        int maxEmailLength = 22 - domain.length();
 
+        String randomEmail = UUID.randomUUID().toString().replace("-", "").substring(0, maxEmailLength);
+        return randomEmail + domain;
+    }
+    public void clearAndEnterEmail(String email){
+        regEmailField.clear();
+        regEmailField.sendKeys(email);
+    }
+    public void clearAndEnterDOB(String dob){
+        regBirthDateField.clear();
+        regBirthDateField.click();
 
-
-
-
-
+        regBirthDateField.sendKeys(dob);
+    }
 
 // email field
 
@@ -137,8 +146,12 @@ public class RegistrationPageObject extends BasePageObject {
 //1@012345678901234.25 (23 characters) is not accepted.
 
 
+//    appears on
+//
+//<div aria-live="polite" role="alertdialog" class="toast-message ng-star-inserted" aria-label="Registration failed!" style=""> Registration failed! </div>
+//
 
-
+     // <div aria-live="polite" role="alertdialog" class="toast-message ng-star-inserted" aria-label="Email taken" style=""> Email taken </div>
 
 
 
