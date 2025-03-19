@@ -29,6 +29,36 @@ public class HomePageObject extends BasePageObject{
         return postThumbnails.size();
     }
 
+//    public void scrollToLoad() {
+//        for (int i = 0; i < 3; i++) {
+//            bodyScroll.sendKeys(Keys.END);
+//            WebDriverWait scrollWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(5));
+//            scrollWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.className("post-feed-container"), postThumbnails.size()));
+//        }
+//    }
+    public void scrollToLoad(int maxScrolls) {
+        int initialCount = postThumbnails.size();
+        int scrolls = 0;
 
+        while (scrolls < maxScrolls) {
+            bodyScroll.sendKeys(Keys.END);
+
+            WebDriverWait scrollWait = new WebDriverWait(webDriver, Duration.ofSeconds(3));
+            scrollWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
+                    By.className("post-feed-container"), initialCount
+            ));
+
+            List<WebElement> updatedPosts = webDriver.findElements(By.className("post-feed-container"));
+            if (updatedPosts.size() > initialCount) {
+                System.out.println("Posts loaded: " + updatedPosts.size());
+                initialCount = updatedPosts.size();
+            } else {
+                System.out.println("No more posts loaded.");
+                break;
+            }
+            scrolls++;
+        }
+    }
 }
+
 
