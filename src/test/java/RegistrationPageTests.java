@@ -41,6 +41,15 @@ public class RegistrationPageTests extends BaseTestConfig {
 
         registrationPage.validateFieldsText();
 
+        //user length should be between 2 and 20 characters as per the page invalid-feedback
+        //<span _ngcontent-lgj-c4="" class="invalid-feedback ng-star-inserted"> Maximum 20 characters! </span>
+        //<span _ngcontent-lgj-c4="" class="invalid-feedback ng-star-inserted"> Minimum 2 characters ! </span>
+
+        String testUser = registrationPage.genRandomUser(20);
+        System.out.println("Name of user is: " + testUser);
+        System.out.println("Size of User is: " + testUser.length());
+
+
 
 
 
