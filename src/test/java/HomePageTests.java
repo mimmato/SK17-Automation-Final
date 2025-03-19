@@ -6,18 +6,26 @@ import org.testng.annotations.Test;
 
 public class HomePageTests extends BaseTestConfig{
 
-    private static final Logger log = LoggerFactory.getLogger(HomePageTests.class);
+//    private static final Logger log = LoggerFactory.getLogger(HomePageTests.class);
 
     @Test
     public void verifyLandingPage(){
         WebDriver driver = getDriver();
 
-        BasePageObject homePage = new BasePageObject(driver);
+        BasePageObject basePage = new BasePageObject(driver);
 
         String uri = "/posts/all";
-        homePage.openURL(uri);
-        boolean isCorrectURL = homePage.isCurrentURLCorrect(uri);
+        basePage.openURL(uri);
+        boolean isCorrectURL = basePage.isCurrentURLCorrect(uri);
         Assert.assertTrue(isCorrectURL, "The URL did not match the expected landing page.");
+
+        HomePageObject homePage = new HomePageObject(driver);
+        homePage.areThreePostsLoaded();
+        Assert.assertTrue(homePage.areThreePostsLoaded(), "Expected 3 posts, but got a different number: " + homePage.postThumbnails.size());
+
+
+
+
 
 
 
@@ -31,6 +39,4 @@ public class HomePageTests extends BaseTestConfig{
 
 
     }
-
-
 }
