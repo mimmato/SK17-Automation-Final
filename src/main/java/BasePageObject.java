@@ -19,6 +19,10 @@ public class BasePageObject {
     private WebElement homeLink;
     @FindBy(id = "nav-link-new-post")
     private WebElement newPostLink;
+    @FindBy(xpath = "//i[contains(@class, 'fa-sign-out-alt')]")
+    private WebElement logoutIcon;
+    @FindBy(id = "search-bar")
+    private WebElement searchBar;
 
     public static final String CURRENT_URL = "http://training.skillo-bg.com:4300";
     public final WebDriver webDriver;
@@ -27,7 +31,6 @@ public class BasePageObject {
         this.webDriver = webDriver;
         PageFactory.initElements(this.webDriver, this);
     }
-
     public boolean isCurrentURLCorrect(String uri) {
         String expectedURL = CURRENT_URL + uri;
 
@@ -42,18 +45,15 @@ public class BasePageObject {
         String currentURL = this.webDriver.getCurrentUrl();
         return currentURL.equals(expectedURL);
     }
-
     public void openURL(String uri) {
         String fullURL = CURRENT_URL + uri;
         webDriver.get(fullURL);
     }
-
     public void clickLoginLink() {
         WebDriverWait loginPageLinkWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(3));
         loginPageLinkWait.until(ExpectedConditions.elementToBeClickable(this.loginLink));
         this.loginLink.click();
     }
-
     public void navigateToRegistrationPage() {
         String uri = "/posts/all";
         openURL(uri);
@@ -71,7 +71,6 @@ public class BasePageObject {
         uri = "/users/register";
         Assert.assertTrue(registrationPage.isCurrentURLCorrect(uri), "The URL did not match the expected Registration page.");
     }
-
     public void navigateToLoginPage(){
         String uri = "/posts/all";
         openURL(uri);
@@ -83,6 +82,24 @@ public class BasePageObject {
         uri = "/users/login";
         Assert.assertTrue(loginPage.isCurrentURLCorrect(uri), "The URL did not match the expected Login page.");
 
+    }
+    public String getProfileLinkText() {
+        return profileLink.getText();
+    }
+    public String getHomeLinkText() {
+        return homeLink.getText();
+    }
+    public String getNewPostLinkText() {
+        return newPostLink.getText();
+    }
+    public boolean getExitIconText() {
+        return logoutIcon.isDisplayed();
+    }
+    public String getSearchBarText() {
+        return searchBar.getAttribute("placeholder");
+    }
+    public void clickExit(){
+        this.logoutIcon.click();
     }
 }
 

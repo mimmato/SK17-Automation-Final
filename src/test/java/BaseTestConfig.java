@@ -4,19 +4,15 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class BaseTestConfig {
 
@@ -26,11 +22,10 @@ public class BaseTestConfig {
     private WebDriver webDriver;
 
     @BeforeSuite
-    protected void setBeforeSuite() {
+    protected void setBeforeSuite() throws IOException {
         WebDriverManager.chromedriver().setup();
-
+        delScreenshots();
     }
-
     @BeforeMethod
     protected void setBeforeMethod() {
         this.webDriver = new ChromeDriver(/*configChromeOptions()*/);
@@ -38,44 +33,16 @@ public class BaseTestConfig {
         this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20)); // 60 orig
         this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // 45 orig
     }
-
-//    private ChromeOptions configChromeOptions() {
-//        Map<String, Object> prefs = new HashMap<>();
-//        ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.setExperimentalOption("prefs", prefs);
-//        return chromeOptions;
-//    }
-
     @AfterMethod
     protected void tearDownTest(ITestResult testResult) {
         takeScreenshotOnFailure(testResult);
         quitDriver();
     }
-//    @AfterSuite
-//    protected void delScreenshots() throws IOException{
-//        System.out.println("Attempting to delete old screenshots...");
-//        delScreenshotDIR(SCREENSHOTS_DIR);
-//    }
-
-//    private void takeScreenshotOnFailure(ITestResult testResult) {
-//        if (ITestResult.FAILURE == testResult.getStatus()) {
-//            try {
-//                TakesScreenshot takeScreenshot = (TakesScreenshot) webDriver;
-//                File screenshot = takeScreenshot.getScreenshotAs(OutputType.FILE);
-//                String testName = testResult.getName() + "_" + Thread.currentThread().threadId();
-//
-//                for (Object param : testResult.getParameters()) {
-//                    if (!param.toString().isEmpty()) {
-//                        testName = testName + param;
-//                    }
-//                }
-//                FileUtils.copyFile(screenshot, new File(SCREENSHOTS_DIR.concat(testName).concat(".jpg")));
-//            } catch (IOException ex) {
-//                System.out.println("Unable to create a screenshot file: " + ex.getMessage());
-//            }
-//        }
-//    }
-private void takeScreenshotOnFailure(ITestResult testResult) {
+    protected void delScreenshots() throws IOException{
+        System.out.println("Attempting to delete old screenshots...");
+        delScreenshotDIR(SCREENSHOTS_DIR);
+    }
+    private void takeScreenshotOnFailure(ITestResult testResult) {
     if (webDriver == null) {
         System.out.println("WebDriver is null, skipping screenshot.");
         return;
@@ -113,11 +80,9 @@ private void takeScreenshotOnFailure(ITestResult testResult) {
         }
     }
 }
-
     protected WebDriver getDriver(){
         return this.webDriver;
     }
-
     private void quitDriver() {
         if (this.webDriver != null) {
             this.webDriver.quit();
@@ -127,7 +92,6 @@ private void takeScreenshotOnFailure(ITestResult testResult) {
             System.out.println("WebDriver is null.");
         }
     }
-
     private void delScreenshotDIR(String SCREENSHOTS_DIR) throws IOException {
         File directory = new File(SCREENSHOTS_DIR);
 
@@ -144,27 +108,4 @@ private void takeScreenshotOnFailure(ITestResult testResult) {
     }
 }
 
-
-
-
-
-
-
-
-
-
-//    private ChromeOptions configChromeOptions() {
-//        // Get the default download directory path
-//        String downloadPath = System.getProperty("user.dir") + File.separator + DOWNLOAD_DIR;
-//
-//        // Set the Chrome preferences
-//        Map<String, Object> prefs = new HashMap<>();
-//        prefs.put("download.default_directory", downloadPath);
-//
-//        // Apply preferences to ChromeOptions
-//        ChromeOptions options = new ChromeOptions();
-//        options.setExperimentalOption("prefs", prefs);
-//
-//        return options;
-//    }
 

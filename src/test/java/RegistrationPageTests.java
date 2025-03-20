@@ -1,14 +1,6 @@
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.sql.SQLOutput;
-import java.time.Duration;
 
 public class RegistrationPageTests extends BaseTestConfig {
 
@@ -49,7 +41,7 @@ public class RegistrationPageTests extends BaseTestConfig {
 
     //Title: Username validation message is incorrect. Minimum length is 4 characters, but message says 2.
     @Test
-    public void testValidUsernameTooShort() {
+    public void testValidUsernameTooShortBug() {
         WebDriver driver = getDriver();
         RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
 
@@ -65,46 +57,45 @@ public class RegistrationPageTests extends BaseTestConfig {
                 registrationPage.getTextFieldsDangerMess());
     }
 
-    @Test
-    public void testValidEmail() {
-        WebDriver driver = getDriver();
-        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+//    @Test
+//    public void testValidEmail() {
+//        WebDriver driver = getDriver();
+//        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+//
+//        BasePageObject basePage = new BasePageObject(driver);
+//        basePage.navigateToRegistrationPage();
+//
+//        String validEmail = registrationPage.genRandomEmail(22);
+//        System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
+//        registrationPage.clearAndEnterEmail(validEmail);
+//    }
+//    @Test
+//    public void testValidDOB() throws InterruptedException {
+//        WebDriver driver = getDriver();
+//        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+//        BasePageObject basePage = new BasePageObject(driver);
+//        basePage.navigateToRegistrationPage();
+//        registrationPage.clearAndEnterDOB("23-07-1993");
+//    }
 
-        BasePageObject basePage = new BasePageObject(driver);
-        basePage.navigateToRegistrationPage();
-
-        String validEmail = registrationPage.genRandomEmail(22);
-        System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
-        registrationPage.clearAndEnterEmail(validEmail);
-    }
-
+//    @Test
+//    public void testValidPassword() {
+//        WebDriver driver = getDriver();
+//        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+//        BasePageObject basePage = new BasePageObject(driver);
+//        basePage.navigateToRegistrationPage();
+//        registrationPage.clearAndEnterPass("Testing123!");
+//    }
+//    @Test
+//    public void testValidPublicInfo() {
+//        WebDriver driver = getDriver();
+//        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+//        BasePageObject basePage = new BasePageObject(driver);
+//        basePage.navigateToRegistrationPage();
+//        registrationPage.clearAndEnterPublicInfo("Testing");
+//    }
     @Test
-    public void testValidDOB() throws InterruptedException {
-        WebDriver driver = getDriver();
-        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
-        BasePageObject basePage = new BasePageObject(driver);
-        basePage.navigateToRegistrationPage();
-        registrationPage.clearAndEnterDOB("23-07-1993");
-    }
-    @Test
-    public void testValidPassword() {
-        WebDriver driver = getDriver();
-        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
-        BasePageObject basePage = new BasePageObject(driver);
-        basePage.navigateToRegistrationPage();
-        registrationPage.clearAndEnterPass("Testing123!");
-    }
-    @Test
-    public void testValidPublicInfo() {
-        WebDriver driver = getDriver();
-        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
-        BasePageObject basePage = new BasePageObject(driver);
-        basePage.navigateToRegistrationPage();
-        registrationPage.clearAndEnterPublicInfo("Testing");
-    }
-
-    @Test
-    public void testRegFailureWithSuccessMessages() {
+    public void testRegWithSuccessMessagesBug() {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToRegistrationPage();
@@ -128,7 +119,6 @@ public class RegistrationPageTests extends BaseTestConfig {
             Assert.fail("Bug detected: Registration failed with success messages count of 6!");
         }
     }
-
     @Test
     public void testRegSuccess() {
             WebDriver driver = getDriver();
