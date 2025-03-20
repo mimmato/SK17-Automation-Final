@@ -13,41 +13,58 @@ This project is an automated testing framework built using **TestNG**, **Seleniu
 ## Project Structure
 
 ```tree
-│   .gitignore
-│   pom.xml
-│   README.md
-│   testng.xml
-│   
-├───src
-│   ├───main
-│   │   ├───java
-│   │   │   BasePageObject.java
-│   │   │   HeaderObject.java
-│   │   │   HomePageObject.java
-│   │   │   LoginPageObject.java
-│   │   │   RegistrationPageObject.java
-│   │   └───resources
-│   └───test
-│       ├───java
-│       │   BaseTestConfig.java
-│       │   HomePageTests.java
-│       │   LoginPageTests.java
-│       │   RegistrationPageTests.java
-│       └───resources
-│           └───screenshots
-└───target
-    ├───classes
-    │   BasePageObject.class
-    │   HomePageObject.class
-    │   LoginPageObject.class
-    │   RegistrationPageObject.class
-    ├───generated-sources
-    └───test-classes
-        │   BaseTestConfig.class
-        │   HomePageTests.class
-        │   LoginPageTests.class
-        │   RegistrationPageTests.class
-        └───screenshots
+|   .gitignore
+|   pom.xml
+|   README.md
+|   testng.xml
+|   
++---.idea
+|       .gitignore
+|       compiler.xml
+|       encodings.xml
+|       jarRepositories.xml
+|       misc.xml
+|       vcs.xml
+|       workspace.xml
+|       
++---src
+|   +---main
+|   |   +---java
+|   |   |       BasePageObject.java
+|   |   |       HeaderObject.java
+|   |   |       HomePageObject.java
+|   |   |       LoginPageObject.java
+|   |   |       RegistrationPageObject.java
+|   |   |
+|   |   \---resources
+|   \---test
+|       +---java
+|       |       BaseTestConfig.java
+|       |       HomePageTests.java
+|       |       LoginPageTests.java
+|       |       RegistrationPageTests.java
+|       |
+|       \---resources
+|           \---screenshots
+\---target
+    +---classes
+    |       BasePageObject.class
+    |       HeaderObject.class
+    |       HomePageObject.class
+    |       LoginPageObject.class
+    |       RegistrationPageObject.class
+    |
+    +---generated-sources
+    |   \---annotations
+    +---generated-test-sources
+    |   \---test-annotations
+    \---test-classes
+        |   BaseTestConfig.class
+        |   HomePageTests.class
+        |   LoginPageTests.class
+        |   RegistrationPageTests.class
+        |
+        \---screenshots
   ```
 
 
