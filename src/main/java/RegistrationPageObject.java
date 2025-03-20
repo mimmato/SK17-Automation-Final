@@ -43,10 +43,10 @@ public class RegistrationPageObject extends BasePageObject {
 
     public String getToastMessage(){
         try {
-            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));  // 10 seconds timeout
-            wait.until(ExpectedConditions.visibilityOf(toastMessage));  // Wait until the toast message is visible
+            WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+            waitToast.until(ExpectedConditions.visibilityOf(toastMessage));
             return toastMessage.getText();
-        } catch (TimeoutException e) {
+        } catch (TimeoutException ex) {
             return "Toast message not found";
         }
     }

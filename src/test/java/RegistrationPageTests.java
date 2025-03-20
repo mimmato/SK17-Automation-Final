@@ -86,7 +86,6 @@ public class RegistrationPageTests extends BaseTestConfig {
         basePage.navigateToRegistrationPage();
         registrationPage.clearAndEnterDOB("23-07-1993");
     }
-
     @Test
     public void testValidPassword() {
         WebDriver driver = getDriver();
@@ -95,7 +94,6 @@ public class RegistrationPageTests extends BaseTestConfig {
         basePage.navigateToRegistrationPage();
         registrationPage.clearAndEnterPass("Testing123!");
     }
-
     @Test
     public void testValidPublicInfo() {
         WebDriver driver = getDriver();
