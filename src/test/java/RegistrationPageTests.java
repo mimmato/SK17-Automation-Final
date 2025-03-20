@@ -113,6 +113,11 @@ public class RegistrationPageTests extends BaseTestConfig {
         registrationPage.testValidPublicInfo();
         registrationPage.clickSignInButton();
 
+        //check for has-success fields, verify all fields are marked as has-success, check error
+        // check failed message
+        //// check div[@class='input-filed has-success'] should equal 6 results in length
+        // if the above a true then bug
+
         Assert.assertEquals(registrationPage.isUsernameDanger(), registrationPage.isUsernameSuccess(), "The " + shortUser + " user should be accepted due to feedback message: " +
                 registrationPage.getUsernameDangerMess());
 
