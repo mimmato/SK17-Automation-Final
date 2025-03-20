@@ -1,3 +1,56 @@
+# QA Automation Framework
+
+## Project Overview
+
+This project is an automated testing framework built using **TestNG**, **Selenium WebDriver**, and the **Page Object Model (POM)** pattern. It automates key user interactions within a web application, including **user registration**, **login**, and **home page** functionalities. The framework is designed to be modular, reusable, and scalable, ensuring efficient test maintenance and easy extensibility.
+
+## Key Features
+
+- **BaseTestConfig**: Centralized setup and teardown for WebDriver initialization, screenshot capture on test failures, and environment cleanup.
+- **Page Object Model (POM)**: A dedicated page object for each page in the web application (e.g., **HomePage**, **RegistrationPage**, **LoginPage**). Each page object encapsulates the page elements and methods for interacting with them.
+- **Test Cases**: Validates critical user flows such as registration, login (via username and email), and home page functionality. Includes assertions for success and failure scenarios.
+
+## Project Structure
+
+```tree
+│   .gitignore
+│   pom.xml
+│   README.md
+│   testng.xml
+│   
+├───src
+│   ├───main
+│   │   ├───java
+│   │   │   BasePageObject.java
+│   │   │   HeaderObject.java
+│   │   │   HomePageObject.java
+│   │   │   LoginPageObject.java
+│   │   │   RegistrationPageObject.java
+│   │   └───resources
+│   └───test
+│       ├───java
+│       │   BaseTestConfig.java
+│       │   HomePageTests.java
+│       │   LoginPageTests.java
+│       │   RegistrationPageTests.java
+│       └───resources
+│           └───screenshots
+└───target
+    ├───classes
+    │   BasePageObject.class
+    │   HomePageObject.class
+    │   LoginPageObject.class
+    │   RegistrationPageObject.class
+    ├───generated-sources
+    └───test-classes
+        │   BaseTestConfig.class
+        │   HomePageTests.class
+        │   LoginPageTests.class
+        │   RegistrationPageTests.class
+        └───screenshots
+  ```
+
+
 # Table of Contents
 
 1. **[BaseTestConfig.java](#basetestconfigjava)**
