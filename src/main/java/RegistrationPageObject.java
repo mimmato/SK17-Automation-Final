@@ -53,13 +53,13 @@ public class RegistrationPageObject extends BasePageObject {
     public String getTextFieldsDangerMess(){
         return textFieldsParentDivDanger.getText();
     }
-    public String getTextFieldsSuccessMess(){
-        String messagesResult = "";
-        for (WebElement element : textFieldsParentDivSuccess){
-            messagesResult = element.getText();
-        } return messagesResult;
-
-    }
+//    public String getTextFieldsSuccessMess(){
+//        String messagesResult = "";
+//        for (WebElement element : textFieldsParentDivSuccess){
+//            messagesResult = element.getText();
+//        } return messagesResult;
+//
+//    }
     public int getNumSuccessMess(){
         return textFieldsParentDivSuccess.size();
     }
@@ -112,7 +112,6 @@ public class RegistrationPageObject extends BasePageObject {
         try {
             WebDriverWait waitUserSuccessMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
             waitUserSuccessMess.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-success']")));
-//            return textFieldsParentDivSuccess.getAttribute("class").contains("has-success");
             return !textFieldsParentDivSuccess.isEmpty();
 
         } catch (NoSuchElementException | TimeoutException ex) {
@@ -132,19 +131,19 @@ public class RegistrationPageObject extends BasePageObject {
     public void testValidUsername() {
 
         String validUser = genRandomUser(20);
-        System.out.println("Testing valid username: " + validUser + " (Length: " + validUser.length() + ")");
+//        System.out.println("Testing valid username: " + validUser + " (Length: " + validUser.length() + ")");
         enterAndValidateUsername(validUser);
     }
-    public void testValidEmailWith21Char(){
+    public void testInvalidEmailWith21Char(){
 
         String validEmail = genRandomEmail(21);
-        System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
+//        System.out.println("Testing invalid email: " + validEmail + " (Length: " + validEmail.length() + ")");
         clearAndEnterEmail(validEmail);
     }
     public void testValidEmailWith20Characters(){
 
         String validEmail = genRandomEmail(20);
-        System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
+//        System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
         clearAndEnterEmail(validEmail);
     }
     public void testValidDOB()  {
