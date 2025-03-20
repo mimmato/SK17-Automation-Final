@@ -1,6 +1,4 @@
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -40,8 +38,9 @@ public class RegistrationPageTests extends BaseTestConfig {
         registrationPage.clearAndEnterUsername(longUser);
 
         Assert.assertTrue(registrationPage.isUsernameSuccess(), "The " + longUser + " user should NOT be accepted due to feedback message: " +
-                registrationPage.getUsernameDangerMess());
+                registrationPage.getTextFieldsDangerMess());
     }
+
     //Title: Username validation message is incorrect. Minimum length is 4 characters, but message says 2.
     @Test
     public void testValidUsernameTooShort() {
@@ -56,11 +55,12 @@ public class RegistrationPageTests extends BaseTestConfig {
         String shortUser = registrationPage.genRandomUser(2);
         System.out.println("Testing valid username: " + shortUser + " (Length: " + shortUser.length() + ")");
         registrationPage.clearAndEnterUsername(shortUser);
-        Assert.assertEquals(registrationPage.isUsernameDanger(), registrationPage.isUsernameSuccess(), "The " + shortUser + " user should be accepted due to feedback message: " +
-                registrationPage.getUsernameDangerMess());
+        Assert.assertEquals(registrationPage.isUsernameDanger(), registrationPage.isUsernameSuccess(), "The '" + shortUser + "' user should be accepted due to feedback message: " +
+                registrationPage.getTextFieldsDangerMess());
     }
+
     @Test
-    public void testValidEmail(){
+    public void testValidEmail() {
         WebDriver driver = getDriver();
         RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
 
@@ -71,6 +71,7 @@ public class RegistrationPageTests extends BaseTestConfig {
         System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
         registrationPage.clearAndEnterEmail(validEmail);
     }
+
     @Test
     public void testValidDOB() throws InterruptedException {
         WebDriver driver = getDriver();
@@ -99,7 +100,7 @@ public class RegistrationPageTests extends BaseTestConfig {
     }
 
     @Test
-    public void happyPathRegInputBugEmailLength() {
+    public void testRegFailureWithSuccessMessages() {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToRegistrationPage();
@@ -113,29 +114,19 @@ public class RegistrationPageTests extends BaseTestConfig {
         registrationPage.testValidPublicInfo();
         registrationPage.clickSignInButton();
 
-        //check for has-success fields, verify all fields are marked as has-success, check error
-        // check failed message
-        //// check div[@class='input-filed has-success'] should equal 6 results in length
-        // if the above a true then bug
+        registrationPage.getToastMessage();
+        System.out.println(registrationPage.getToastMessage());
 
-        Assert.assertEquals(registrationPage.isUsernameDanger(), registrationPage.isUsernameSuccess(), "The " + shortUser + " user should be accepted due to feedback message: " +
-                registrationPage.getUsernameDangerMess());
+        registrationPage.getNumSuccessMess();
+        System.out.println(registrationPage.getNumSuccessMess());
 
+        if (registrationPage.getToastMessage().equals("Registration failed!") && registrationPage.getNumSuccessMess() == 6) {
+            Assert.fail("Bug detected: Registration failed with success messages count of 6!");
+        }
+
+
+        //Must contain digit and uppercase letter!
     }
-
-
-//    @Test
-//    public void voltron(){
-////        testValidEmail();
-////        testValidUsername();
-//    RegistrationPageObject registrationPageObject = new RegistrationPageObject(getDriver());
-//    registrationPageObject.navigateToRegistrationPage();
-//    registrationPageObject.clearAndEnterUsername("");
-//    registrationPageObject.clearAndEnterEmail("");
-//
-//}
-
-    //Must contain digit and uppercase letter!
 }
 
 

@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.UUID;
 
 public class RegistrationPageObject extends BasePageObject {
@@ -32,20 +33,40 @@ public class RegistrationPageObject extends BasePageObject {
     private WebElement regSignInButton;
 
     @FindBy(xpath = "//div[@class='input-filed has-danger']")
-    private WebElement usernameParentDivDanger;
+    private WebElement textFieldsParentDivDanger;
     @FindBy(xpath = "//div[@class='input-filed has-success']")
-    private WebElement usernameParentDivSuccess;
-
-    public String getUsernameDangerMess(){
-        return usernameParentDivDanger.getText();
-    }
-    public String getUsernameSuccessMess(){
-        return usernameParentDivSuccess.getText();
-    }
-
+    private List<WebElement> textFieldsParentDivSuccess;
 
     @FindBy(xpath = "//div[@aria-label='Username taken']")
     private WebElement usernameTakenToast;
+
+    @FindBy(xpath = "//div[@role='alertdialog']")
+    private WebElement toastMessage;
+
+    public String getToastMessage(){
+        try {
+            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));  // 10 seconds timeout
+            wait.until(ExpectedConditions.visibilityOf(toastMessage));  // Wait until the toast message is visible
+            return toastMessage.getText();
+        } catch (TimeoutException e) {
+            return "Toast message not found";
+        }
+    }
+
+    public String getTextFieldsDangerMess(){
+        return textFieldsParentDivDanger.getText();
+    }
+
+    public String getTextFieldsSuccessMess(){
+        String messagesResult = "";
+        for (WebElement element : textFieldsParentDivSuccess){
+            messagesResult = element.getText();
+        } return messagesResult;
+
+    }
+    public int getNumSuccessMess(){
+        return textFieldsParentDivSuccess.size();
+    }
 
     public void validateFieldsText() {
         String usernamePlaceholder = regUsernameField.getAttribute("placeholder");
@@ -96,7 +117,8 @@ public class RegistrationPageObject extends BasePageObject {
         try {
             WebDriverWait waitUserSuccessMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
             waitUserSuccessMess.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-success']")));
-            return usernameParentDivSuccess.getAttribute("class").contains("has-success");
+//            return textFieldsParentDivSuccess.getAttribute("class").contains("has-success");
+            return !textFieldsParentDivSuccess.isEmpty();
 
         } catch (NoSuchElementException | TimeoutException ex) {
             return false;  // Return false if the element is not found
@@ -107,7 +129,7 @@ public class RegistrationPageObject extends BasePageObject {
             WebDriverWait waitUserDangerMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
             waitUserDangerMess.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-danger']")));
 //            return usernameParentDivDanger.getText();
-            return usernameParentDivDanger.getAttribute("class").contains("has-danger");
+            return textFieldsParentDivDanger.getAttribute("class").contains("has-danger");
         } catch (NoSuchElementException | TimeoutException ex) {
             return false;
         }
