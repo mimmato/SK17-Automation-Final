@@ -4,7 +4,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +13,6 @@ public class RegistrationPageObject extends BasePageObject {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
     }
-
 
     @FindBy(xpath = "//input[@formcontrolname='username']")
     private WebElement regUsernameField;
@@ -52,11 +50,9 @@ public class RegistrationPageObject extends BasePageObject {
             return "Toast message not found";
         }
     }
-
     public String getTextFieldsDangerMess(){
         return textFieldsParentDivDanger.getText();
     }
-
     public String getTextFieldsSuccessMess(){
         String messagesResult = "";
         for (WebElement element : textFieldsParentDivSuccess){
@@ -67,7 +63,6 @@ public class RegistrationPageObject extends BasePageObject {
     public int getNumSuccessMess(){
         return textFieldsParentDivSuccess.size();
     }
-
     public void validateFieldsText() {
         String usernamePlaceholder = regUsernameField.getAttribute("placeholder");
         Assert.assertEquals(usernamePlaceholder, "Username", "Username field placeholder text is incorrect: " + usernamePlaceholder);
@@ -121,7 +116,7 @@ public class RegistrationPageObject extends BasePageObject {
             return !textFieldsParentDivSuccess.isEmpty();
 
         } catch (NoSuchElementException | TimeoutException ex) {
-            return false;  // Return false if the element is not found
+            return false;
         }
     }
     public boolean isUsernameDanger() {
@@ -134,43 +129,42 @@ public class RegistrationPageObject extends BasePageObject {
             return false;
         }
     }
-
     public void testValidUsername() {
 
         String validUser = genRandomUser(20);
         System.out.println("Testing valid username: " + validUser + " (Length: " + validUser.length() + ")");
         enterAndValidateUsername(validUser);
     }
+    public void testValidEmailWith21Char(){
 
-    public void testValidEmail(){
-
-        String validEmail = genRandomEmail(22);
+        String validEmail = genRandomEmail(21);
         System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
         clearAndEnterEmail(validEmail);
     }
+    public void testValidEmailWith20Characters(){
 
+        String validEmail = genRandomEmail(20);
+        System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
+        clearAndEnterEmail(validEmail);
+    }
     public void testValidDOB()  {
         clearAndEnterDOB("23-07-1993");
     }
-
     public void testValidPassword() {
         clearAndEnterPass("Testing123!");
     }
-
     public void testValidPublicInfo() {
         clearAndEnterPublicInfo("Testing");
     }
-
     public void clickSignInButton(){
         regSignInButton.click();
     }
-
     public void cleanRegUsernameField(){
         regUsernameField.clear();
     }
     public String genRandomEmail(int desiredLength){
         String domain = "@t.m";
-        int maxEmailLength = 22 - domain.length();
+        int maxEmailLength = desiredLength - domain.length();
 
         String randomEmail = UUID.randomUUID().toString().replace("-", "").substring(0, maxEmailLength);
         return randomEmail + domain;
@@ -189,35 +183,10 @@ public class RegistrationPageObject extends BasePageObject {
         regConfirmPasswordField.clear();
         regConfirmPasswordField.sendKeys(password);
     }
-
     public void clearAndEnterPublicInfo(String text){
         regPublicInfoField.clear();
         regPublicInfoField.sendKeys(text);
     }
-
-// email field
-
-    //<div aria-live="polite" role="alertdialog" class="toast-message ng-star-inserted" aria-label="Registration failed!" style=""> Registration failed! </div>
-    //1@a.cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo9999999999999999ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo9999999999999999oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo9999999999999999oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo9999999999999999oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo9999999999999999oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo9999999999999999oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo9999999999999999oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo9999999999999999ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-    //test@test.com
-
-    // a test for input-filed has-success which is the checkmark
-    // if all 6 fields has it then the reg should complete
-    // but if email fieldhas23characters then the toast is shown regardless of success checkmark
-// 1@012345678901234.2 (22 characters) is accepted.
-//1@012345678901234.25 (23 characters) is not accepted.
-
-
-//    appears on
-//
-//<div aria-live="polite" role="alertdialog" class="toast-message ng-star-inserted" aria-label="Registration failed!" style=""> Registration failed! </div>
-//
-
-     // <div aria-live="polite" role="alertdialog" class="toast-message ng-star-inserted" aria-label="Email taken" style=""> Email taken </div>
-
-
-
-
     public void handleUsernameTaken() {
         // Check if the "Username taken" toast is displayed
         WebDriverWait waitForToast = new WebDriverWait(webDriver, Duration.ofSeconds(5));
@@ -232,5 +201,4 @@ public class RegistrationPageObject extends BasePageObject {
             System.out.println("Username is available.");
         }
     }
-
 }

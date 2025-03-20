@@ -20,7 +20,6 @@ public class BasePageObject {
     @FindBy(id = "nav-link-new-post")
     private WebElement newPostLink;
 
-
     public static final String CURRENT_URL = "http://training.skillo-bg.com:4300";
     public final WebDriver webDriver;
 
@@ -56,22 +55,34 @@ public class BasePageObject {
     }
 
     public void navigateToRegistrationPage() {
-        String uri = "/posts/all"; // starting point, could be home or another page
+        String uri = "/posts/all";
         openURL(uri);
-        // Assuming BasePageObject has the openURL method that does the navigation
         Assert.assertTrue(isCurrentURLCorrect(uri), "The URL did not match the expected Landing page.");
 
-        clickLoginLink(); // Navigate to login page
+        clickLoginLink();
 
         LoginPageObject loginPage = new LoginPageObject(webDriver);
         uri = "/users/login";
         Assert.assertTrue(loginPage.isCurrentURLCorrect(uri), "The URL did not match the expected Login page.");
 
-        loginPage.clickRegister(); // Click on the register link
+        loginPage.clickRegister();
 
         RegistrationPageObject registrationPage = new RegistrationPageObject(webDriver);
         uri = "/users/register";
         Assert.assertTrue(registrationPage.isCurrentURLCorrect(uri), "The URL did not match the expected Registration page.");
+    }
+
+    public void navigateToLoginPage(){
+        String uri = "/posts/all";
+        openURL(uri);
+        Assert.assertTrue(isCurrentURLCorrect(uri), "The URL did not match the expected Landing page.");
+
+        clickLoginLink();
+
+        LoginPageObject loginPage = new LoginPageObject(webDriver);
+        uri = "/users/login";
+        Assert.assertTrue(loginPage.isCurrentURLCorrect(uri), "The URL did not match the expected Login page.");
+
     }
 }
 

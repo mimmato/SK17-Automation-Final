@@ -1,12 +1,18 @@
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.sql.SQLOutput;
+import java.time.Duration;
+
 public class RegistrationPageTests extends BaseTestConfig {
 
-    private static final Logger log = LoggerFactory.getLogger(RegistrationPageTests.class);
+//    private static final Logger log = LoggerFactory.getLogger(RegistrationPageTests.class);
 
     @Test
     public void testValidUsername() {
@@ -108,7 +114,7 @@ public class RegistrationPageTests extends BaseTestConfig {
         registrationPage.validateFieldsText();
 
         registrationPage.testValidUsername();
-        registrationPage.testValidEmail();
+        registrationPage.testValidEmailWith21Char();
         registrationPage.testValidDOB();
         registrationPage.testValidPassword();
         registrationPage.testValidPublicInfo();
@@ -123,7 +129,37 @@ public class RegistrationPageTests extends BaseTestConfig {
         if (registrationPage.getToastMessage().equals("Registration failed!") && registrationPage.getNumSuccessMess() == 6) {
             Assert.fail("Bug detected: Registration failed with success messages count of 6!");
         }
+    }
 
+    @Test
+    public void testRegSuccess() {
+            WebDriver driver = getDriver();
+            BasePageObject basePage = new BasePageObject(driver);
+            basePage.navigateToRegistrationPage();
+            RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+            registrationPage.validateFieldsText();
+
+            registrationPage.testValidUsername();
+
+            registrationPage.testValidEmailWith20Characters();
+
+            registrationPage.testValidDOB();
+            registrationPage.testValidPassword();
+            registrationPage.testValidPublicInfo();
+            registrationPage.clickSignInButton();
+
+            registrationPage.getToastMessage();
+            System.out.println(registrationPage.getToastMessage());
+
+            registrationPage.getNumSuccessMess();
+            System.out.println(registrationPage.getNumSuccessMess());
+
+            if (registrationPage.getToastMessage().equals("Registration failed!") && registrationPage.getNumSuccessMess() == 6) {
+                Assert.fail("Bug detected: Registration failed with success messages count of 6!");
+            }
+
+            registrationPage.isCurrentURLCorrect("/posts/all");
+            System.out.println(registrationPage.isCurrentURLCorrect("/posts/all"));
 
         //Must contain digit and uppercase letter!
     }
