@@ -13,7 +13,7 @@ If you're using IntelliJ, follow these steps to clone the project:
 ```   
 https://github.com/mimmato/SK17-Automation-Final.git
 ```
-3. Paste the URL into the **URL** text field.
+3. Paste the URL into the **URL** field.
 4. Specify the directory where you want to save your project.
 5. Click **Clone**.
 
