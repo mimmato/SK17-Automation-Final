@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Test Suite SK17" parallel="methods thread-count=4">
+    <test name="ChromeTests of Skillo test page">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="BaseTestConfig"/>
+            <class name="HomePageTests"/>
+            <class name="LoginPageTests"/>
+            <class name="RegistrationPageTests"/>
+        </classes>
+    </test>
+</suite>

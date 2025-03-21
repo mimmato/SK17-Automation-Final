@@ -4,11 +4,11 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -21,18 +21,46 @@ public class BaseTestConfig {
 
     private WebDriver webDriver;
 
+//    @BeforeSuite
+//    protected void setBeforeSuite() throws IOException {
+////        WebDriverManager.chromedriver().setup();
+//        WebDriverManager.edgedriver().setup();
+//        delScreenshots();
+//    }
+//    @BeforeMethod
+//    protected void setBeforeMethod() {
+////        this.webDriver = new ChromeDriver(/*configChromeOptions()*/);
+//        this.webDriver = new EdgeDriver(/*configChromeOptions()*/);
+//        this.webDriver.manage().window().maximize();
+//        this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20)); // 60 orig
+//        this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // 45 orig
+//    }
+
     @BeforeSuite
-    protected void setBeforeSuite() throws IOException {
-        WebDriverManager.chromedriver().setup();
+    @Parameters("browser")
+    public void setBeforeSuite(@Optional("chrome")String browser) throws IOException {
+        if (browser.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            WebDriverManager.edgedriver().setup();
+        }
         delScreenshots();
-    }
+}
+
     @BeforeMethod
-    protected void setBeforeMethod() {
-        this.webDriver = new ChromeDriver(/*configChromeOptions()*/);
+    @Parameters("browser")
+    public void setBeforeMethod(@Optional("chrome")String browser) {
+        if (browser.equalsIgnoreCase("chrome")) {
+            this.webDriver = new ChromeDriver();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            this.webDriver = new EdgeDriver();
+        }
         this.webDriver.manage().window().maximize();
-        this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20)); // 60 orig
-        this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // 45 orig
+        this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+        this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
+
+
     @AfterMethod
     protected void tearDownTest(ITestResult testResult) {
         takeScreenshotOnFailure(testResult);
