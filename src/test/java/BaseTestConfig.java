@@ -95,7 +95,7 @@ public class BaseTestConfig {
 
                 String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
                 String testName = testResult.getName() + "_" + timestamp;
-                testName = testName.replaceAll("[^a-zA-Z0-9_-]", "_"); // Sanitizing the test name
+                testName = testName.replaceAll("[^a-zA-Z0-9_-]", "_";
 
                 File destFile = new File(SCREENSHOTS_DIR.concat(testName).concat(".jpg"));
                 FileUtils.copyFile(screenshot, destFile);
