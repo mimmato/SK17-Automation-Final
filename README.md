@@ -4,6 +4,25 @@
 
 This project is an automated testing framework built using **TestNG**, **Selenium WebDriver**, and the **Page Object Model (POM)** pattern. It automates key user interactions within a web application, including **user registration**, **login**, and **home page** functionalities. The framework is designed to be modular, reusable, and scalable, ensuring efficient test maintenance and easy extensibility.
 
+## How to Clone the Project Using IntelliJ
+
+If you're using IntelliJ, follow these steps to clone the project:
+
+1. Go to **File** > **New** > **Project From Version Control**.
+2. Copy the following URL to your clipboard:
+```   
+https://github.com/mimmato/SK17-Automation-Final.git
+```
+3. Paste the URL into the **URL** text field.
+4. Specify the directory where you want to save your project.
+5. Click **Clone**.
+
+The project will now be cloned to your specified directory, and you can begin testing.
+
+The project is configured to execute a total of 7 tests, 3 classes in parallel and run in Chrome. To execute it, you can either right-click on the testng.xml file 
+located in the project root directory and click **Run** or use the **"Run / Debug Configuration"** option of IntelliJ (make sure the correct path to testng.xml is selected).
+
+
 ## Key Features
 
 - **BaseTestConfig**: Centralized setup and teardown for WebDriver initialization, screenshot capture on test failures, and environment cleanup.
