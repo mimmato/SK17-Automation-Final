@@ -28,8 +28,20 @@ public class BaseTestConfig {
         } else if (browser.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();
         }
+        makeScreenshotDIR(SCREENSHOTS_DIR);
         delScreenshots();
 }
+    public void makeScreenshotDIR(String SCREENSHOTS_DIR){
+        File directory = new File(SCREENSHOTS_DIR);
+        if (!directory.exists()) {
+            boolean created = directory.mkdirs(); // Creates the directory and any necessary parent directories
+            if (created) {
+                System.out.println("Screenshots directory created at: " + directory);
+            } else {
+                System.out.println("Failed to create screenshots directory at: " + directory);
+            }
+        }
+    }
     private void delScreenshotDIR(String SCREENSHOTS_DIR) throws IOException {
         File directory = new File(SCREENSHOTS_DIR);
 
@@ -66,43 +78,35 @@ public class BaseTestConfig {
         delScreenshotDIR(SCREENSHOTS_DIR);
     }
     private void takeScreenshotOnFailure(ITestResult testResult) {
-    if (webDriver == null) {
-        System.out.println("WebDriver is null, skipping screenshot.");
-        return;
-    }
+        if (webDriver == null) {
+            System.out.println("WebDriver is null, skipping screenshot.");
+            return;
+        }
 
-    if (ITestResult.FAILURE == testResult.getStatus()) {
-        try {
-
-            File screenshotDir = new File(SCREENSHOTS_DIR);
-            if (!screenshotDir.exists()) {
-                screenshotDir.mkdirs();
-            }
-
-            TakesScreenshot takeScreenshot = (TakesScreenshot) webDriver;
-            File screenshot = takeScreenshot.getScreenshotAs(OutputType.FILE);
-
-            String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-            String testName = testResult.getName() + "_" + timestamp;
-
-            if (testResult.getParameters() != null) {
-                for (Object param : testResult.getParameters()) {
-                    if (param != null && !param.toString().isEmpty()) {
-                        testName = testName + "_" + param;
-                    }
+        if (ITestResult.FAILURE == testResult.getStatus()) {
+            try {
+                File screenshotDir = new File(SCREENSHOTS_DIR);
+                if (!screenshotDir.exists()) {
+                    screenshotDir.mkdirs();
                 }
+
+                TakesScreenshot takeScreenshot = (TakesScreenshot) webDriver;
+                File screenshot = takeScreenshot.getScreenshotAs(OutputType.FILE);
+
+                String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+                String testName = testResult.getName() + "_" + timestamp;
+                testName = testName.replaceAll("[^a-zA-Z0-9_-]", "_"); // Sanitizing the test name
+
+                File destFile = new File(SCREENSHOTS_DIR.concat(testName).concat(".jpg"));
+                FileUtils.copyFile(screenshot, destFile);
+
+                System.out.println("Screenshot saved: " + destFile.getAbsolutePath());
+
+            } catch (IOException ex) {
+                System.out.println("Unable to create a screenshot file: " + ex.getMessage());
             }
-
-            File destFile = new File(SCREENSHOTS_DIR.concat(testName).concat(".jpg"));
-            FileUtils.copyFile(screenshot, destFile);
-
-            System.out.println("Screenshot saved: " + destFile.getAbsolutePath());
-
-        } catch (IOException ex) {
-            System.out.println("Unable to create a screenshot file: " + ex.getMessage());
         }
     }
-}
     protected WebDriver getDriver(){
         return this.webDriver;
     }
