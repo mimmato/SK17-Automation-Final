@@ -28,7 +28,8 @@ public class RegistrationPageTests extends BaseTestConfig {
         String shortUser = registrationPage.genRandomUser(2);
         System.out.println("Testing valid username: " + shortUser + " (Length: " + shortUser.length() + ")");
         registrationPage.clearAndEnterUsername(shortUser);
-        Assert.assertEquals(registrationPage.isUsernameDanger(), registrationPage.isUsernameSuccess(), "The '" + shortUser + "' user should be accepted due to feedback message: " +
+        Assert.assertEquals(registrationPage.isUsernameDanger(), registrationPage.isUsernameSuccess(), "Bug detected: " +
+                "The '" + shortUser + "' user should be accepted due to feedback message: " +
                 registrationPage.getTextFieldsDangerMess());
     }
     @Test

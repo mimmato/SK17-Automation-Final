@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Test Suite SK17" parallel="methods thread-count=4">
+<suite name="Test Suite SK17" parallel="classes" thread-count="3">
    <test name="Tests on training.skillo-bg.com:4300">
-       <parameter name="browser" value="edge"/>
+       <parameter name="browser" value="chrome"/>
        <classes>
            <class name="HomePageTests">
            </class>

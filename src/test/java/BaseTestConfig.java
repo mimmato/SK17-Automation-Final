@@ -18,23 +18,7 @@ public class BaseTestConfig {
 
     public static final String RESOURCES_DIR = "src/test/resources/";
     public static final String SCREENSHOTS_DIR = RESOURCES_DIR.concat("screenshots/");
-
     private WebDriver webDriver;
-
-//    @BeforeSuite
-//    protected void setBeforeSuite() throws IOException {
-////        WebDriverManager.chromedriver().setup();
-//        WebDriverManager.edgedriver().setup();
-//        delScreenshots();
-//    }
-//    @BeforeMethod
-//    protected void setBeforeMethod() {
-////        this.webDriver = new ChromeDriver(/*configChromeOptions()*/);
-//        this.webDriver = new EdgeDriver(/*configChromeOptions()*/);
-//        this.webDriver.manage().window().maximize();
-//        this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20)); // 60 orig
-//        this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // 45 orig
-//    }
 
     @BeforeSuite
     @Parameters("browser")
@@ -46,7 +30,20 @@ public class BaseTestConfig {
         }
         delScreenshots();
 }
+    private void delScreenshotDIR(String SCREENSHOTS_DIR) throws IOException {
+        File directory = new File(SCREENSHOTS_DIR);
 
+        Assert.assertTrue(directory.isDirectory(), "Invalid directory");
+
+        FileUtils.cleanDirectory(directory);
+
+        String[] fileList = directory.list();
+        if (fileList != null && fileList.length == 0) {
+            System.out.printf("All files are deleted in Directory: %s%n", SCREENSHOTS_DIR);
+        } else {
+            System.out.printf("Unable to delete the files in Directory: %s%n", SCREENSHOTS_DIR);
+        }
+    }
     @BeforeMethod
     @Parameters("browser")
     public void setBeforeMethod(@Optional("chrome")String browser) {
@@ -59,8 +56,6 @@ public class BaseTestConfig {
         this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
         this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
-
-
     @AfterMethod
     protected void tearDownTest(ITestResult testResult) {
         takeScreenshotOnFailure(testResult);
@@ -118,20 +113,6 @@ public class BaseTestConfig {
             Assert.assertNull(this.webDriver, "WebDriver should be null after quitting.");
         } else {
             System.out.println("WebDriver is null.");
-        }
-    }
-    private void delScreenshotDIR(String SCREENSHOTS_DIR) throws IOException {
-        File directory = new File(SCREENSHOTS_DIR);
-
-        Assert.assertTrue(directory.isDirectory(), "Invalid directory");
-
-        FileUtils.cleanDirectory(directory);
-
-        String[] fileList = directory.list();
-        if (fileList != null && fileList.length == 0) {
-            System.out.printf("All files are deleted in Directory: %s%n", SCREENSHOTS_DIR);
-        } else {
-            System.out.printf("Unable to delete the files in Directory: %s%n", SCREENSHOTS_DIR);
         }
     }
 }

@@ -24,8 +24,7 @@ public class HomePageObject extends BasePageObject{
     public int checkPostsLoaded() {
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfAllElements(postThumbnails));
-
-        System.out.println("Number of posts found: " + postThumbnails.size());
+//        System.out.println("Number of posts found: " + postThumbnails.size());
         return postThumbnails.size();
     }
 
@@ -50,10 +49,10 @@ public class HomePageObject extends BasePageObject{
 
             List<WebElement> updatedPosts = webDriver.findElements(By.className("post-feed-container"));
             if (updatedPosts.size() > initialCount) {
-                System.out.println("Posts loaded: " + updatedPosts.size());
+//                System.out.println("Posts loaded: " + updatedPosts.size());
                 initialCount = updatedPosts.size();
             } else {
-                System.out.println("No more posts loaded.");
+//                System.out.println("No more posts loaded.");
                 break;
             }
             scrolls++;
