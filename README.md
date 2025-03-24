@@ -100,6 +100,21 @@ In this case, it executes 3 Test Classes in parallel.
 
 - **pom.xml**: Specifies the Maven configuration for your project, including project metadata, dependencies, and build settings. 
 
+
+## 📌 Test Case Documentation
+
+| #  | Test Name | Description | Expected Result |
+|----|----------------------------------|---------------------------------------------------|---------------------------|
+| 1  | `verifyLoadingOfPostsOnHome` | Check if posts load correctly on the homepage, including lazy loading. | The correct number of posts should load initially and after scrolling. |
+| 2  | `interactWithPostOnHome` | Click on a post, check post details, navigate back, and add a comment. | Post modal should display correctly, and interactions should work. |
+| 3  | `testLoginUserSuccessExitRemember` | Log in with a valid username, log out, and log back in using the remembered credentials. | Login, logout, and auto-login should work as expected. |
+| 4  | `testLoginEmailSuccessExitRemember` | Log in with an email, log out, and log back in. | Login, logout, and auto-login should work as expected. |
+| 5  | `testLoginWrongUser` | Attempt to log in with a random incorrect username and password. | A "Wrong username or password!" error message should appear. |
+| 6  | `testInvalidUsernameTooLong` | Attempt to register with a username exceeding the max character limit. | The username should be rejected, and an error should be displayed. |
+| 7  | `testValidUsernameTooShortBug` | Attempt to register with a very short username to check for unexpected acceptance. | Test should fail if the username is incorrectly accepted. |
+| 8  | `testRegWithSuccessMessagesEmailBug` | Attempt to register with valid inputs but check if failure occurs despite success messages. | If failure occurs with success messages displayed, the test should fail. |
+| 9  | `testRegSuccess` | Complete a valid registration process. | The user should be successfully registered and redirected to `/posts/all`. |
+
 ## Project tree
 
 ```tree
