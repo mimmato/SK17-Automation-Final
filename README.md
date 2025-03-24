@@ -86,7 +86,7 @@ use the **"Run / Debug Configuration"** option of IntelliJ (make sure the correc
 - **src/test/resources/screenshots**: directory set up in the **BaseTestConfig** file. Its contents are deleted @BeforeSuite, so users can inspect evidence following the TestSuite execution run. Contents are also\
 excluded in the .gitignore file.
 
-![Screenshots directory](https://imgur.com/a/vQxRrrz)
+[Screenshots directory](https://imgur.com/a/vQxRrrz)
 
 
 - **testng.xml**: Specifies the configuration for running the tests in parallel. It defines the test suite, test parameters, and the classes to be executed. 
