@@ -65,6 +65,11 @@ use the **"Run / Debug Configuration"** option of IntelliJ (make sure the correc
 
 ⚠️ - bugs
 
+### Expected Test Outcomes
+- **Total tests:** 9
+- **Expected to pass:** 7 ✅
+- **Expected to fail:** 2 ⚠️
+
 ## Project contents
 
 - **src/test/java**:
