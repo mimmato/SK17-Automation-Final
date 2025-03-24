@@ -37,6 +37,16 @@ public class LoginPageObject extends BasePageObject {
         return usernameOrEmailField;
     }
 
+    public WebElement getToastMessageElement(){
+        try {
+            WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+            waitToast.until(ExpectedConditions.visibilityOf(toastMessage));
+            return toastMessage;
+        } catch (TimeoutException ex) {
+            return null;
+        }
+    }
+
     public String getToastMessage(){
         try {
             WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));

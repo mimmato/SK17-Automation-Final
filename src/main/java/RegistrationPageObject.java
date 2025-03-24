@@ -131,19 +131,16 @@ public class RegistrationPageObject extends BasePageObject {
     public void testValidUsername() {
 
         String validUser = genRandomUser(20);
-//        System.out.println("Testing valid username: " + validUser + " (Length: " + validUser.length() + ")");
         enterAndValidateUsername(validUser);
     }
     public void testInvalidEmailWith21Char(){
 
         String validEmail = genRandomEmail(21);
-//        System.out.println("Testing invalid email: " + validEmail + " (Length: " + validEmail.length() + ")");
         clearAndEnterEmail(validEmail);
     }
     public void testValidEmailWith20Characters(){
 
         String validEmail = genRandomEmail(20);
-//        System.out.println("Testing valid email: " + validEmail + " (Length: " + validEmail.length() + ")");
         clearAndEnterEmail(validEmail);
     }
     public void testValidDOB()  {
@@ -186,18 +183,5 @@ public class RegistrationPageObject extends BasePageObject {
         regPublicInfoField.clear();
         regPublicInfoField.sendKeys(text);
     }
-    public void handleUsernameTaken() {
-        // Check if the "Username taken" toast is displayed
-        WebDriverWait waitForToast = new WebDriverWait(webDriver, Duration.ofSeconds(5));
-        try {
-            waitForToast.until(ExpectedConditions.visibilityOf(usernameTakenToast));
-            // If the toast is visible, the username is taken
-            System.out.println("Username is taken. Clearing username field...");
-            cleanRegUsernameField();  // Clear the username field
-            // Optionally, generate and enter a new random username here
-        } catch (TimeoutException ex) {
-            // If the toast doesn't appear, continue as usual
-            System.out.println("Username is available.");
-        }
-    }
+
 }

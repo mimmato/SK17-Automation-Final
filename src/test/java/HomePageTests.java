@@ -30,7 +30,7 @@ public class HomePageTests extends BaseTestConfig{
     }
 
     @Test
-    public void interactWithPostOnHome(){
+    public void interactWithPostOnHome() throws InterruptedException {
         WebDriver driver = getDriver();
 
         BasePageObject basePage = new BasePageObject(driver);
@@ -41,7 +41,14 @@ public class HomePageTests extends BaseTestConfig{
         Assert.assertTrue(isCorrectURL, "The URL did not match the expected landing page: " + uri);
 
         HomePageObject homePage = new HomePageObject(driver);
-        homePage.clickPost(2);
+        homePage.clickPost(1);
+        homePage.checkPostInfoElements();
+
+        homePage.clickUserInPostModal();
+
+        driver.navigate().back();
+        homePage.clickPost(1);
+        homePage.enterCommentInPostModal();
 
     }
 }

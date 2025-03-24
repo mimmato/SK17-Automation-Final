@@ -4,6 +4,21 @@
 
 This project is an automated testing framework built using **TestNG**, **Selenium WebDriver**, and the **Page Object Model (POM)** pattern. It automates key user interactions within a web application, including **user registration**, **login**, and **home page** functionalities. The framework is designed to be modular, reusable, and scalable, ensuring efficient test maintenance and easy extensibility.
 
+## Project requirements 
+
+- Develop a **Java Maven** test automation project using **TestNG** and **Selenium WebDriver**.
+- Follow the **Page Object Model (POM)** design pattern with **PageFactory** for project structure.
+- Automate at least **5 different test scenarios** against the following website:
+
+  **[Skillo Training Website](http://training.skillo-bg.com:4300/posts/all)**
+
+- Include a **testng.xml** file for test execution.
+- Ensure that all tests can be executed using **testng.xml** in the **Chrome browser**.
+- Capture a **screenshot** on test failure and save it to a designated directory.
+- Host the project in a **public GitHub repository**.
+- Provide a **README.md** file that explains the project and describes the implemented test cases.
+
+
 ## How to Clone the Project Using IntelliJ
 
 If you're using IntelliJ, follow these steps to clone the project:
@@ -26,6 +41,29 @@ The project is configured to execute a total of 7 tests, 3 classes in parallel a
 To execute it, you can either right-click on the testng.xml file located in the project root directory and click **Run** or
 use the **"Run / Debug Configuration"** option of IntelliJ (make sure the correct path to testng.xml is selected).
 
+# Test Case Scenarios
+
+## Home Page - Interaction with Elements
+- ✅ Verify posts load correctly via scrolling.
+- 🔄 Click on a post and check interaction with elements (**TO DO**).
+
+## Registration Page
+- ❌ Test registration with an **invalid username** that exceeds the length limit.
+- ⚠️ Test registration with a **valid username** that triggers the **min length** (**bug**).
+- ⚠️ Test registration with an **email that exceeds the length limit** (**bug**).
+- ✅ Test successful registration.
+
+## Login Page
+- ✅ Test **successful login with a username**, exit, and verify "Remember Me" functionality.
+- ✅ Test **successful login with an email**, exit, and verify "Remember Me" functionality.
+- ❌ Test login with an **incorrect username**.
+
+### Legend
+✅ - positive/happy path scenarios
+
+❌ - negative path scenarios
+
+⚠️ - bugs
 
 ## Key Features
 
@@ -33,62 +71,7 @@ use the **"Run / Debug Configuration"** option of IntelliJ (make sure the correc
 - **Page Object Model (POM)**: A dedicated page object for each page in the web application (e.g., **HomePage**, **RegistrationPage**, **LoginPage**). Each page object encapsulates the page elements and methods for interacting with them.
 - **Test Cases**: Validates critical user flows such as registration, login (via username and email), and home page functionality. Includes assertions for success and failure scenarios.
 
-## Project Structure
 
-```tree
-|   .gitignore
-|   pom.xml
-|   README.md
-|   testng.xml
-|   
-+---.idea
-|       .gitignore
-|       compiler.xml
-|       encodings.xml
-|       jarRepositories.xml
-|       misc.xml
-|       vcs.xml
-|       workspace.xml
-|       
-+---src
-|   +---main
-|   |   +---java
-|   |   |       BasePageObject.java
-|   |   |       HeaderObject.java
-|   |   |       HomePageObject.java
-|   |   |       LoginPageObject.java
-|   |   |       RegistrationPageObject.java
-|   |   |
-|   |   \---resources
-|   \---test
-|       +---java
-|       |       BaseTestConfig.java
-|       |       HomePageTests.java
-|       |       LoginPageTests.java
-|       |       RegistrationPageTests.java
-|       |
-|       \---resources
-|           \---screenshots
-\---target
-    +---classes
-    |       BasePageObject.class
-    |       HeaderObject.class
-    |       HomePageObject.class
-    |       LoginPageObject.class
-    |       RegistrationPageObject.class
-    |
-    +---generated-sources
-    |   \---annotations
-    +---generated-test-sources
-    |   \---test-annotations
-    \---test-classes
-        |   BaseTestConfig.class
-        |   HomePageTests.class
-        |   LoginPageTests.class
-        |   RegistrationPageTests.class
-        |
-        \---screenshots
-  ```
 
 
 # Table of Contents
@@ -517,59 +500,58 @@ The `LoginPageTests` class contains automated test cases for validating the logi
 
 This test class ensures that both **username and email-based login work correctly** while verifying navigation and "Remember Me" functionality.
 
-Project structure:
+## Project Structure
 
 ```tree
-│   .gitignore
-│   pom.xml
-│   README.md
-│   testng.xml
-│   
-├───.idea
-│       .gitignore
-│       compiler.xml
-│       encodings.xml
-│       jarRepositories.xml
-│       misc.xml
-│       vcs.xml
-│       workspace.xml
-│       
-├───src
-│   ├───main
-│   │   ├───java
-│   │   │       BasePageObject.java
-│   │   │       HeaderObject.java
-│   │   │       HomePageObject.java
-│   │   │       LoginPageObject.java
-│   │   │       RegistrationPageObject.java
-│   │   │
-│   │   └───resources
-│   └───test
-│       ├───java
-│       │       BaseTestConfig.java
-│       │       HomePageTests.java
-│       │       LoginPageTests.java
-│       │       RegistrationPageTests.java
-│       │
-│       └───resources
-│           └───screenshots
-└───target
-    ├───classes
-    │       BasePageObject.class
-    │       HeaderObject.class
-    │       HomePageObject.class
-    │       LoginPageObject.class
-    │       RegistrationPageObject.class
-    │
-    ├───generated-sources
-    │   └───annotations
-    ├───generated-test-sources
-    │   └───test-annotations
-    └───test-classes
-        │   BaseTestConfig.class
-        │   HomePageTests.class
-        │   LoginPageTests.class
-        │   RegistrationPageTests.class
-        │
-        └───screenshots
-```
+|   .gitignore
+|   pom.xml
+|   README.md
+|   testng.xml
+|   
++---.idea
+|       .gitignore
+|       compiler.xml
+|       encodings.xml
+|       jarRepositories.xml
+|       misc.xml
+|       vcs.xml
+|       workspace.xml
+|       
++---src
+|   +---main
+|   |   +---java
+|   |   |       BasePageObject.java
+|   |   |       HeaderObject.java
+|   |   |       HomePageObject.java
+|   |   |       LoginPageObject.java
+|   |   |       RegistrationPageObject.java
+|   |   |
+|   |   \---resources
+|   \---test
+|       +---java
+|       |       BaseTestConfig.java
+|       |       HomePageTests.java
+|       |       LoginPageTests.java
+|       |       RegistrationPageTests.java
+|       |
+|       \---resources
+|           \---screenshots
+\---target
+    +---classes
+    |       BasePageObject.class
+    |       HeaderObject.class
+    |       HomePageObject.class
+    |       LoginPageObject.class
+    |       RegistrationPageObject.class
+    |
+    +---generated-sources
+    |   \---annotations
+    +---generated-test-sources
+    |   \---test-annotations
+    \---test-classes
+        |   BaseTestConfig.class
+        |   HomePageTests.class
+        |   LoginPageTests.class
+        |   RegistrationPageTests.class
+        |
+        \---screenshots
