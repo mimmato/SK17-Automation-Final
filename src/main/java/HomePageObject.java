@@ -1,7 +1,4 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,6 +18,33 @@ public class HomePageObject extends BasePageObject{
     @FindBy(tagName = "body")
     protected WebElement bodyScroll;
 
+    @FindBy(xpath = "//div[@class='post-feed-img']//img")
+    private List<WebElement> postOpen;
+
+    @FindBy(css = "i.like")
+    private WebElement LikeIcon;
+
+
+
+    public void clickPost(int postPosition) {
+        if (postOpen.isEmpty()) {
+            throw new NoSuchElementException("No posts found");
+        }
+
+        if (postPosition < 0 || postPosition >= postOpen.size()) {
+            throw new IndexOutOfBoundsException("Post index is not within the expected post position: " + postPosition +
+                    ". Must be between 0 and " + (postOpen.size() - 1));
+        }
+
+        postOpen.get(postPosition).click();
+    }
+
+    public void checkPostElements(){
+
+    }
+
+
+
     public int checkPostsLoaded() {
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfAllElements(postThumbnails));
@@ -28,13 +52,6 @@ public class HomePageObject extends BasePageObject{
         return postThumbnails.size();
     }
 
-//    public void scrollToLoad() {
-//        for (int i = 0; i < 3; i++) {
-//            bodyScroll.sendKeys(Keys.END);
-//            WebDriverWait scrollWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(5));
-//            scrollWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.className("post-feed-container"), postThumbnails.size()));
-//        }
-//    }
     public void scrollToLoad(int maxScrolls) {
         int initialCount = postThumbnails.size();
         int scrolls = 0;

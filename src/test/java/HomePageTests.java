@@ -7,7 +7,7 @@ public class HomePageTests extends BaseTestConfig{
 //    private static final Logger log = LoggerFactory.getLogger(HomePageTests.class);
 
     @Test
-    public void verifyLandingPage(){
+    public void verifyLoadingOfPostsOnHome(){
         WebDriver driver = getDriver();
 
         BasePageObject basePage = new BasePageObject(driver);
@@ -27,5 +27,21 @@ public class HomePageTests extends BaseTestConfig{
         int actualPostCountAfterScroll = homePage.checkPostsLoaded();
         Assert.assertEquals(actualPostCountAfterScroll, actualPostCount * 4,
                 "Expected 12 posts after 3 scrolls to END, but got a different number: " + actualPostCountAfterScroll);
+    }
+
+    @Test
+    public void interactWithPostOnHome(){
+        WebDriver driver = getDriver();
+
+        BasePageObject basePage = new BasePageObject(driver);
+
+        String uri = "/posts/all";
+        basePage.openURL(uri);
+        boolean isCorrectURL = basePage.isCurrentURLCorrect(uri);
+        Assert.assertTrue(isCorrectURL, "The URL did not match the expected landing page: " + uri);
+
+        HomePageObject homePage = new HomePageObject(driver);
+        homePage.clickPost(2);
+
     }
 }

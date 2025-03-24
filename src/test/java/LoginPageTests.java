@@ -3,7 +3,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LoginPageTests extends BaseTestConfig{
+public class LoginPageTests extends BaseTestConfig {
 
     @Test
     public void testLoginUserSuccessExitRemember() {
@@ -25,6 +25,7 @@ public class LoginPageTests extends BaseTestConfig{
         loginPage.clickSignIn();
         Assert.assertEquals(loginPage.getToastMessage(), "Successful login!", "Toast message is wrong, you are NOT logged in!");
     }
+
     @Test
     public void testLoginEmailSuccessExitRemember() throws InterruptedException {
         WebDriver driver = getDriver();
@@ -45,4 +46,28 @@ public class LoginPageTests extends BaseTestConfig{
         loginPage.clickSignIn();
         Assert.assertEquals(loginPage.getToastMessage(), "Successful login!", "Toast message is wrong, you are NOT logged in!");
     }
+
+    @Test
+    public void testLoginWrongUser() throws InterruptedException {
+        WebDriver driver = getDriver();
+        BasePageObject basePage = new BasePageObject(driver);
+        basePage.navigateToLoginPage();
+        insertWrongUserAndPass();
+
+    }
+    public void insertWrongUserAndPass(){
+        WebDriver driver = getDriver();
+        LoginPageObject loginPage = new LoginPageObject(driver);
+
+        RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
+        String wrongUser = registrationPage.genRandomUser(10);
+
+        loginPage.getUsernameOrEmailField().clear();
+        loginPage.getUsernameOrEmailField().sendKeys(wrongUser);
+
+        loginPage.clearAndEnterPassword();
+        loginPage.clickSignIn();
+        Assert.assertEquals(loginPage.getToastMessage(), "Wrong username or password!", "Toast message is wrong, you are NOT logged in!");
+    }
+
 }

@@ -33,6 +33,10 @@ public class LoginPageObject extends BasePageObject {
     @FindBy(xpath = "//div[@role='alertdialog']")
     private WebElement toastMessage;
 
+    public WebElement getUsernameOrEmailField() {
+        return usernameOrEmailField;
+    }
+
     public String getToastMessage(){
         try {
             WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
@@ -90,7 +94,7 @@ public class LoginPageObject extends BasePageObject {
     public void clearEnterUsernameValidate(String username){
         usernameOrEmailField.clear();
         usernameOrEmailField.sendKeys(username);
-        Assert.assertEquals(username, "mishm", "The entered user does NOT match the expected!");
+        Assert.assertEquals(username, "mishmprotected", "The entered user does NOT match the expected!");
     }
     public void clearEnterEmailValidate(String email){
         usernameOrEmailField.clear();
@@ -114,17 +118,20 @@ public class LoginPageObject extends BasePageObject {
         this.signInButton.click();
     }
     public void fillUserInfoCheck(){
-        clearEnterUsernameValidate("mishm");
+        clearEnterUsernameValidate("mishmprotected");
         clearAndEnterPassword();
         checkRememberMe();
         Assert.assertTrue(isSignInEnabled(), "Sign in button should NOT be disabled when either Username and Password fields are blank.");
-
     }
     public void fillEmailCheck(){
         clearEnterEmailValidate("mishm2@mish.m");
         clearAndEnterPassword();
         checkRememberMe();
         Assert.assertTrue(isSignInEnabled(), "Sign in button should NOT be disabled when either Username and Password fields are blank.");
+    }
+    public void insertUser(){
+        usernameOrEmailField.clear();
+        usernameOrEmailField.sendKeys();
     }
     public void clickRegister() {
         this.registerLink.click();
