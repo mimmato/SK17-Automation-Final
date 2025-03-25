@@ -24,7 +24,7 @@
 
 This project is an automated testing framework built using **TestNG**, **Selenium WebDriver**, and the **Page Object Model (POM)** pattern. It automates key user interactions within a web application, including **user registration**, **login**, and **home page** functionalities. The framework is designed to be modular, reusable, and scalable, ensuring efficient test maintenance and easy extensibility.
 
-## Project requirements 
+## Project requirements
 
 - Develop a **Java Maven** test automation project using **TestNG** and **Selenium WebDriver**.
 - Follow the **Page Object Model (POM)** design pattern with **PageFactory** for project structure.
