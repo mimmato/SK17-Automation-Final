@@ -1,5 +1,25 @@
 # QA Automation Framework
 
+<details>
+<summary>Table of Contents</summary>
+
+- [QA Automation Framework](#qa-automation-framework)
+  - [Project Overview](#project-overview)
+  - [Project Requirements](#project-requirements)
+  - [How to Clone the Project Using IntelliJ](#how-to-clone-the-project-using-intellij)
+  - [How to Run Tests](#how-to-run-tests)
+  - [Test Case Scenarios](#test-case-scenarios)
+    - [Home Page - Interaction with Elements](#home-page---interaction-with-elements)
+    - [Registration Page](#registration-page)
+    - [Login Page](#login-page)
+    - [Legend](#legend)
+    - [Expected Test Outcomes](#expected-test-outcomes)
+  - [Project Contents](#project-contents)
+  - [📌 Test Case Documentation](#📌-test-case-documentation)
+  - [Project Tree](#project-tree)
+
+</details>
+
 ## Project Overview
 
 This project is an automated testing framework built using **TestNG**, **Selenium WebDriver**, and the **Page Object Model (POM)** pattern. It automates key user interactions within a web application, including **user registration**, **login**, and **home page** functionalities. The framework is designed to be modular, reusable, and scalable, ensuring efficient test maintenance and easy extensibility.
@@ -40,7 +60,12 @@ The project is configured to execute a total of 9 tests within 3 class files in 
 To execute the test suite, you can either right-click on the testng.xml file located in the project root directory and click **Run** or
 use the **"Run / Debug Configuration"** option of IntelliJ (make sure the correct path to testng.xml is selected).
 
-Alternatively, you may also enter the following command in your terminal to start the test:
+Alternatively, you may also enter the following command in your terminal to install dependencies:
+
+```shell
+mvn clean install
+```
+start the test:
 
 ```shell
 mvn clean test
@@ -106,17 +131,17 @@ In this case, it executes 3 Test Classes in parallel.
 
 ## 📌 Test Case Documentation
 
-| #  | Test Name | Description | Expected Result                                                            |
-|----|----------------------------------|---------------------------------------------------|----------------------------------------------------------------------------|
-| 1  | `verifyLoadingOfPostsOnHome` | Check if posts load correctly on the homepage, including lazy loading. | The correct number of posts should load initially and after scrolling.     |
-| 2  | `interactWithPostOnHome` | Click on a post, check post details, navigate back, and add a comment. | Post modal should display correctly, and interactions should work.         |
-| 3  | `testLoginUserSuccessExitRemember` | Log in with a valid username, log out, and log back in using the remembered credentials. | Login, logout, and remember me should work as expected.                    |
-| 4  | `testLoginEmailSuccessExitRemember` | Log in with an email, log out, and log back in. | Login, logout, and remember me should work as expected.                     |
-| 5  | `testLoginWrongUser` | Attempt to log in with a random incorrect username and password. | A "Wrong username or password!" error message should appear.               |
-| 6  | `testInvalidUsernameTooLong` | Attempt to register with a username exceeding the max character limit. | The username should be rejected, and an error should be displayed.         |
-| 7  | `testValidUsernameTooShortBug` | Attempt to register with a very short username to check for unexpected acceptance. | Test should fail if the username is incorrectly accepted.                  |
-| 8  | `testRegWithSuccessMessagesEmailBug` | Attempt to register with valid inputs but check if failure occurs despite success messages. | If failure occurs with success messages displayed, the test should fail.   |
-| 9  | `testRegSuccess` | Complete a valid registration process. | The user should be successfully registered and redirected to `/posts/all`. |
+| #  | Test Name | Description                                                                                                           | Expected Result                                                                          |
+|----|----------------------------------|-----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| 1  | `verifyLoadingOfPostsOnHome` | Check if posts load correctly on the homepage, including lazy loading.                                                | The correct number of posts should load initially and after scrolling. (logged out user) |
+| 2  | `interactWithPostOnHome` | Click on a post, check post details, navigate back, and add a comment.                                                | Post modal should display correctly, and interactions should work. (logged out user)                      |
+| 3  | `testLoginUserSuccessExitRemember` | Log in with a valid username, log out, and log back in using the remembered credentials.                              | Login, logout, and remember me should work as expected.                                  |
+| 4  | `testLoginEmailSuccessExitRemember` | Log in with an email, log out, and log back in.                                                                       | Login, logout, and remember me should work as expected.                                  |
+| 5  | `testLoginWrongUser` | Attempt to log in with a random incorrect username and password.                                                      | A "Wrong username or password!" error message should appear.                             |
+| 6  | `testInvalidUsernameTooLong` | Attempt to register with a username exceeding the max character limit.                                                | The username should be rejected, and an error should be displayed.                       |
+| 7  | `testValidUsernameTooShortBug` | Attempt to register with a very short username to check for unexpected acceptance.                                    | Test should fail if the username is incorrectly accepted.                                |
+| 8  | `testRegWithSuccessMessagesEmailBug` | Attempt to register with valid inputs (email length constraint) but check if failure occurs despite success messages. | If failure occurs with success messages displayed, the test should fail.                 |
+| 9  | `testRegSuccess` | Complete a valid registration process.                                                                                | The user should be successfully registered and redirected to `/posts/all`.               |
 
 ## Project tree
 

@@ -22,7 +22,7 @@ public class BaseTestConfig {
 
     @BeforeSuite
     @Parameters("browser")
-    public void setBeforeSuite(@Optional("chrome")String browser) throws IOException {
+    public void setBeforeSuite(@Optional("chrome") String browser) throws IOException {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
         } else if (browser.equalsIgnoreCase("edge")) {
@@ -30,8 +30,9 @@ public class BaseTestConfig {
         }
         makeScreenshotDIR(SCREENSHOTS_DIR);
         delScreenshots();
-}
-    public void makeScreenshotDIR(String SCREENSHOTS_DIR){
+    }
+
+    public void makeScreenshotDIR(String SCREENSHOTS_DIR) {
         File directory = new File(SCREENSHOTS_DIR);
         if (!directory.exists()) {
             boolean created = directory.mkdirs(); // Creates the directory and any necessary parent directories
@@ -42,6 +43,7 @@ public class BaseTestConfig {
             }
         }
     }
+
     private void delScreenshotDIR(String SCREENSHOTS_DIR) throws IOException {
         File directory = new File(SCREENSHOTS_DIR);
 
@@ -56,9 +58,10 @@ public class BaseTestConfig {
             System.out.printf("Unable to delete the files in Directory: %s%n", SCREENSHOTS_DIR);
         }
     }
+
     @BeforeMethod
     @Parameters("browser")
-    public void setBeforeMethod(@Optional("chrome")String browser) {
+    public void setBeforeMethod(@Optional("chrome") String browser) {
         if (browser.equalsIgnoreCase("chrome")) {
             this.webDriver = new ChromeDriver();
         } else if (browser.equalsIgnoreCase("edge")) {
@@ -68,12 +71,14 @@ public class BaseTestConfig {
         this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
         this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
+
     @AfterMethod
     protected void tearDownTest(ITestResult testResult) {
         takeScreenshotOnFailure(testResult);
         quitDriver();
     }
-    protected void delScreenshots() throws IOException{
+
+    protected void delScreenshots() throws IOException {
         System.out.println("Attempting to delete old screenshots...");
         delScreenshotDIR(SCREENSHOTS_DIR);
     }
@@ -107,9 +112,11 @@ public class BaseTestConfig {
             }
         }
     }
-    protected WebDriver getDriver(){
+    protected WebDriver getDriver() {
         return this.webDriver;
     }
+
+
     private void quitDriver() {
         if (this.webDriver != null) {
             this.webDriver.quit();
@@ -119,6 +126,19 @@ public class BaseTestConfig {
             System.out.println("WebDriver is null.");
         }
     }
+
+//    @AfterClass
+//    public void tearDownClass() {
+//        quitDriver();
+//    }
+
+    @AfterSuite
+    public void tearDownSuite() {
+        quitDriver();
+    }
 }
+
+
+
 
 
