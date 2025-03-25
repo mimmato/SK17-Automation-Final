@@ -9,13 +9,13 @@
   - [How to Clone the Project Using IntelliJ](#how-to-clone-the-project-using-intellij)
   - [How to Run Tests](#how-to-run-tests)
   - [Test Case Scenarios](#test-case-scenarios)
-    - [Home Page - Interaction with Elements](#home-page---interaction-with-elements)
+    - [Home Page](#home-page)
     - [Registration Page](#registration-page)
     - [Login Page](#login-page)
     - [Legend](#legend)
     - [Expected Test Outcomes](#expected-test-outcomes)
   - [Project Contents](#project-contents)
-  - [📌 Test Case Documentation](#📌-test-case-documentation)
+  - [📌 Test Case Documentation](#-test-case-documentation)
   - [Project Tree](#project-tree)
 
 </details>
@@ -73,7 +73,7 @@ mvn clean test
 
 # Test Case Scenarios
 
-## Home Page - Interaction with Elements
+## Home Page
 - ✅ Verify posts load correctly via scrolling.
 - ❌ Click on a post and check interaction with elements.
 
