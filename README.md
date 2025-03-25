@@ -148,6 +148,7 @@ In this case, it executes 3 Test Classes in parallel.
 ```tree
 |   .gitignore
 |   pom.xml
+|   pom_backup.xml
 |   README.md
 |   testng.xml
 |   
@@ -159,50 +160,32 @@ In this case, it executes 3 Test Classes in parallel.
 |   |   misc.xml
 |   |   vcs.xml
 |   |   workspace.xml
-|   |   
+|   |
 |   \---libraries
 |           testng.xml
-|           
+|
 +---lib
 |       jcommander-1.83.jar
 |       jquery-3.7.1.jar
 |       slf4j-api-2.0.16.jar
 |       testng-7.11.0.jar
 |
-+---src
-|   +---main
-|   |   +---java
-|   |   |       BasePageObject.java
-|   |   |       HomePageObject.java
-|   |   |       LoginPageObject.java
-|   |   |       RegistrationPageObject.java
-|   |   |
-|   |   \---resources
-|   \---test
-|       +---java
-|       |       BaseTestConfig.java
-|       |       HomePageTests.java
-|       |       LoginPageTests.java
-|       |       RegistrationPageTests.java
-|       |
-|       \---resources
-|           \---screenshots
-|                   testValidUsernameTooShortBug_20250324_163637.jpg
-|
-\---target
-    +---classes
-    |       BasePageObject.class
-    |       HomePageObject.class
-    |       LoginPageObject.class
-    |       RegistrationPageObject.class
-    |
-    +---generated-sources
-    |   \---annotations
-    +---generated-test-sources
-    |   \---test-annotations
-    \---test-classes
-            BaseTestConfig.class
-            HomePageTests.class
-            LoginPageTests.class
-            RegistrationPageTests.class
+\---src
+    +---main
+    |   +---java
+    |   |       BasePageObject.java
+    |   |       HomePageObject.java
+    |   |       LoginPageObject.java
+    |   |       RegistrationPageObject.java
+    |   |
+    |   \---resources
+    \---test
+        +---java
+        |       BaseTestConfig.java
+        |       HomePageTests.java
+        |       LoginPageTests.java
+        |       RegistrationPageTests.java
+        |
+        \---resources
+            \---screenshots
 ```
