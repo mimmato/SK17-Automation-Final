@@ -33,13 +33,18 @@ https://github.com/mimmato/SK17-Automation-Final.git
 5. Click **Clone**.
 
 The project will now be cloned to your specified directory, and you can begin testing.
+The project is configured to execute a total of 9 tests within 3 class files in parallel and run in Chrome.
 
 ## How to Run tests
 
-The project is configured to execute a total of 9 tests within 3 class files in parallel and run in Chrome. 
-
-To execute it, you can either right-click on the testng.xml file located in the project root directory and click **Run** or
+To execute the test suite, you can either right-click on the testng.xml file located in the project root directory and click **Run** or
 use the **"Run / Debug Configuration"** option of IntelliJ (make sure the correct path to testng.xml is selected).
+
+Alternatively, you may also enter the following command in your terminal to start the test:
+
+```shell
+mvn clean test
+```
 
 # Test Case Scenarios
 
@@ -92,7 +97,6 @@ use the **"Run / Debug Configuration"** option of IntelliJ (make sure the correc
 excluded in the .gitignore file.
 
 [Screenshots directory](https://imgur.com/a/vQxRrrz)
-
 
 - **testng.xml**: Specifies the configuration for running the tests in parallel. It defines the test suite, test parameters, and the classes to be executed. 
 In this case, it executes 3 Test Classes in parallel.
