@@ -192,7 +192,6 @@ In this case, it executes 3 Test Classes in parallel.
 \---target
     +---classes
     |       BasePageObject.class
-    |       HeaderObject.class
     |       HomePageObject.class
     |       LoginPageObject.class
     |       RegistrationPageObject.class
