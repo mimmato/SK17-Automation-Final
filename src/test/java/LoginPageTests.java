@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class LoginPageTests extends BaseTestConfig {
 
     @Test
-    public void testLoginUserSuccessExitRemember() {
+    public void loginWithUserAndRememberMe() {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToLoginPage();
@@ -25,9 +25,8 @@ public class LoginPageTests extends BaseTestConfig {
         loginPage.clickSignIn();
         Assert.assertEquals(loginPage.getToastMessage(), "Successful login!", "Toast message is wrong, you are NOT logged in!");
     }
-
     @Test
-    public void testLoginEmailSuccessExitRemember() throws InterruptedException {
+    public void loginWithEmailAndRememberMe() throws InterruptedException {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToLoginPage();
@@ -46,14 +45,12 @@ public class LoginPageTests extends BaseTestConfig {
         loginPage.clickSignIn();
         Assert.assertEquals(loginPage.getToastMessage(), "Successful login!", "Toast message is wrong, you are NOT logged in!");
     }
-
     @Test
-    public void testLoginWrongUser() throws InterruptedException {
+    public void loginWrongUser() throws InterruptedException {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToLoginPage();
         insertWrongUserAndPass();
-
     }
     public void insertWrongUserAndPass(){
         WebDriver driver = getDriver();

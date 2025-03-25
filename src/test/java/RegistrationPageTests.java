@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 public class RegistrationPageTests extends BaseTestConfig {
 
     @Test
-    public void testInvalidUsernameTooLong() {
+    public void rejectLongUser() {
         WebDriver driver = getDriver();
         RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
         BasePageObject basePage = new BasePageObject(driver);
@@ -16,7 +16,7 @@ public class RegistrationPageTests extends BaseTestConfig {
         Assert.assertTrue(registrationPage.isUsernameDanger(), "Username is less than 20 characters and should be accepted!");
     }
     @Test
-    public void testValidUsernameTooShortBug() {
+    public void failShortUser() {
         WebDriver driver = getDriver();
         RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
 
@@ -32,7 +32,7 @@ public class RegistrationPageTests extends BaseTestConfig {
                 registrationPage.getTextFieldsDangerMess());
     }
     @Test
-    public void testRegWithSuccessMessagesEmailBug() {
+    public void failEmailWithSuccessMsg() {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToRegistrationPage();
@@ -51,7 +51,7 @@ public class RegistrationPageTests extends BaseTestConfig {
         }
     }
     @Test
-    public void testRegSuccess() {
+    public void registerSuccess() {
             WebDriver driver = getDriver();
             BasePageObject basePage = new BasePageObject(driver);
             basePage.navigateToRegistrationPage();

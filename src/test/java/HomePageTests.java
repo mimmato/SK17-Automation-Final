@@ -7,7 +7,7 @@ public class HomePageTests extends BaseTestConfig{
 //    private static final Logger log = LoggerFactory.getLogger(HomePageTests.class);
 
     @Test
-    public void verifyLoadingOfPostsOnHome(){
+    public void loadPostsWithScroll(){
         WebDriver driver = getDriver();
 
         BasePageObject basePage = new BasePageObject(driver);
@@ -30,7 +30,7 @@ public class HomePageTests extends BaseTestConfig{
     }
 
     @Test
-    public void interactWithPostOnHome() throws InterruptedException {
+    public void checkPostElements() throws InterruptedException {
         WebDriver driver = getDriver();
 
         BasePageObject basePage = new BasePageObject(driver);
