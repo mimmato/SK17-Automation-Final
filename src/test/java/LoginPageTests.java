@@ -20,10 +20,10 @@ public class LoginPageTests extends BaseTestConfig {
         loginPage.validateElementsPostLogin();
 
         basePage.clickExit();
-        Assert.assertEquals(loginPage.getToastMessage(), "Successful logout!", "Toast message is wrong, you are NOT logged out!");
+        Assert.assertEquals(basePage.getToastMessage(), "Successful logout!", "Toast message is wrong, you are NOT logged out!");
         Assert.assertTrue(loginPage.isCurrentURLCorrect("/users/login"), "The URL is incorrect! ");
         loginPage.clickSignIn();
-        Assert.assertEquals(loginPage.getToastMessage(), "Successful login!", "Toast message is wrong, you are NOT logged in!");
+        Assert.assertEquals(basePage.getToastMessage(), "Successful login!", "Toast message is wrong, you are NOT logged in!");
     }
     @Test
     public void loginWithEmailAndRememberMe() throws InterruptedException {
@@ -52,9 +52,12 @@ public class LoginPageTests extends BaseTestConfig {
         basePage.navigateToLoginPage();
         insertWrongUserAndPass();
     }
+
+    // the following should probably be in Object!!!!!!
     public void insertWrongUserAndPass(){
         WebDriver driver = getDriver();
         LoginPageObject loginPage = new LoginPageObject(driver);
+        BasePageObject basePage = new BasePageObject(driver);
 
         RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
         String wrongUser = registrationPage.genRandomUser(10);
@@ -64,7 +67,6 @@ public class LoginPageTests extends BaseTestConfig {
 
         loginPage.clearAndEnterPassword();
         loginPage.clickSignIn();
-        Assert.assertEquals(loginPage.getToastMessage(), "Wrong username or password!", "Toast message is wrong, you are NOT logged in!");
+        Assert.assertEquals(basePage.getToastMessage(), "Wrong username or password!", "Toast message is wrong, you are NOT logged in!");
     }
-
 }

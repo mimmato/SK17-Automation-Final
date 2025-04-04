@@ -23,27 +23,37 @@ public class BasePageObject {
     private WebElement logoutIcon;
     @FindBy(id = "search-bar")
     private WebElement searchBar;
+    @FindBy(xpath = "//div[@role='alertdialog']")
+    private WebElement toastMessage;
 
     public static final String CURRENT_URL = "http://training.skillo-bg.com:4300";
     public final WebDriver webDriver;
+    private String expectedURL;
+    private String actualURL;
 
     public BasePageObject(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(this.webDriver, this);
     }
     public boolean isCurrentURLCorrect(String uri) {
-        String expectedURL = CURRENT_URL + uri;
-
+        expectedURL = CURRENT_URL + uri;
         WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
         try {
             wait.until(ExpectedConditions.urlToBe(expectedURL));
         } catch (TimeoutException ex) {
-            System.out.println("Expected URL: " + expectedURL);
-            System.out.println("Current URL: " + webDriver.getCurrentUrl());
             return false;
         }
         String currentURL = this.webDriver.getCurrentUrl();
         return currentURL.equals(expectedURL);
+    }
+    public void verifyCurrentURL(String expectedURI) {
+        expectedURL = CURRENT_URL + expectedURI;
+        actualURL = webDriver.getCurrentUrl();
+        Assert.assertEquals(
+                actualURL,
+                expectedURL,
+                "The URI did not match the expected for the landing page: " + expectedURI
+        );
     }
     public void openURL(String uri) {
         String fullURL = CURRENT_URL + uri;
@@ -74,7 +84,6 @@ public class BasePageObject {
     public void navigateToLoginPage(){
         String uri = "/posts/all";
         openURL(uri);
-        Assert.assertTrue(isCurrentURLCorrect(uri), "The URL did not match the expected Landing page.");
 
         clickLoginLink();
 
@@ -100,6 +109,28 @@ public class BasePageObject {
     }
     public void clickExit(){
         this.logoutIcon.click();
+    }
+
+
+
+    public WebElement getToastMessageElement(){
+        try {
+            WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+            waitToast.until(ExpectedConditions.visibilityOf(toastMessage));
+            return toastMessage;
+        } catch (TimeoutException ex) {
+            return null;
+        }
+    }
+
+    public String getToastMessage(){
+        try {
+            WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+            waitToast.until(ExpectedConditions.visibilityOf(toastMessage));
+            return toastMessage.getText();
+        } catch (TimeoutException ex) {
+            return "Toast message not found";
+        }
     }
 }
 

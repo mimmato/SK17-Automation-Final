@@ -3,52 +3,48 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class HomePageTests extends BaseTestConfig{
-
-//    private static final Logger log = LoggerFactory.getLogger(HomePageTests.class);
-
+    private final String uriHome = "/posts/all";
     @Test
     public void loadPostsWithScroll(){
         WebDriver driver = getDriver();
-
         BasePageObject basePage = new BasePageObject(driver);
-
-        String uri = "/posts/all";
-        basePage.openURL(uri);
-        boolean isCorrectURL = basePage.isCurrentURLCorrect(uri);
-        Assert.assertTrue(isCorrectURL, "The URL did not match the expected landing page: " + uri);
-
+        basePage.openURL(uriHome);
+        basePage.verifyCurrentURL(uriHome);
         HomePageObject homePage = new HomePageObject(driver);
-
         int actualPostCount = homePage.checkPostsLoaded();
-        Assert.assertEquals(actualPostCount, 3,
-                "Expected 3 posts, but got a different number: " + actualPostCount);
-
-        homePage.scrollToLoad(3);
-        int actualPostCountAfterScroll = homePage.checkPostsLoaded();
-        Assert.assertEquals(actualPostCountAfterScroll, actualPostCount * 4,
-                "Expected 12 posts after 3 scrolls to END, but got a different number: " + actualPostCountAfterScroll);
+        int expectedPostCount = 3;
+        Assert.assertEquals(
+                actualPostCount,
+                expectedPostCount,
+                "Expected"
+                        + expectedPostCount
+                        + "posts, but got a different number: "
+                        + actualPostCount);
+        int numberOfScrolls = homePage.scrollToLoad(3);
+        int expectedPostCountAfterScroll = 3 + (numberOfScrolls * 3);
+        actualPostCount = homePage.checkPostsLoaded();
+        Assert.assertEquals(
+                actualPostCount,
+                expectedPostCountAfterScroll,
+                "Expected " + expectedPostCountAfterScroll
+                        + " posts after "
+                        + numberOfScrolls
+                        + " scrolls are made, but got a different number: "
+                        + actualPostCount);
     }
-
     @Test
     public void checkPostElements() throws InterruptedException {
         WebDriver driver = getDriver();
-
         BasePageObject basePage = new BasePageObject(driver);
-
-        String uri = "/posts/all";
-        basePage.openURL(uri);
-        boolean isCorrectURL = basePage.isCurrentURLCorrect(uri);
-        Assert.assertTrue(isCorrectURL, "The URL did not match the expected landing page: " + uri);
-
+        basePage.openURL(uriHome);
+        basePage.verifyCurrentURL(uriHome);
         HomePageObject homePage = new HomePageObject(driver);
-        homePage.clickPost(1);
+        homePage.clickPost(2);
         homePage.checkPostInfoElements();
-
         homePage.clickUserInPostModal();
-
         driver.navigate().back();
+        basePage.verifyCurrentURL(uriHome);
         homePage.clickPost(1);
         homePage.enterCommentInPostModal();
-
     }
 }
