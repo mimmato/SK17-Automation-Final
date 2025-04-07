@@ -3,7 +3,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class RegistrationPageTests extends BaseTestConfig {
-
     @Test
     public void rejectLongUser() {
         WebDriver driver = getDriver();
@@ -19,12 +18,9 @@ public class RegistrationPageTests extends BaseTestConfig {
     public void failShortUser() {
         WebDriver driver = getDriver();
         RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
-
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToRegistrationPage();
-
         registrationPage.validateFieldsText();
-
         String shortUser = registrationPage.genRandomUser(2);
         registrationPage.clearAndEnterUsername(shortUser);
         Assert.assertEquals(registrationPage.isUsernameDanger(), registrationPage.isUsernameSuccess(), "Bug detected: " +
@@ -71,6 +67,3 @@ public class RegistrationPageTests extends BaseTestConfig {
             registrationPage.isCurrentURLCorrect("/posts/all");
     }
 }
-
-
-

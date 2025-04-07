@@ -84,13 +84,10 @@ public class BasePageObject {
     public void navigateToLoginPage(){
         String uri = "/posts/all";
         openURL(uri);
-
         clickLoginLink();
-
         LoginPageObject loginPage = new LoginPageObject(webDriver);
         uri = "/users/login";
         Assert.assertTrue(loginPage.isCurrentURLCorrect(uri), "The URL did not match the expected Login page.");
-
     }
     public String getProfileLinkText() {
         return profileLink.getText();
@@ -110,9 +107,6 @@ public class BasePageObject {
     public void clickExit(){
         this.logoutIcon.click();
     }
-
-
-
     public WebElement getToastMessageElement(){
         try {
             WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
@@ -122,7 +116,6 @@ public class BasePageObject {
             return null;
         }
     }
-
     public String getToastMessage(){
         try {
             WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));

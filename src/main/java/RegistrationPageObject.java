@@ -13,7 +13,6 @@ public class RegistrationPageObject extends BasePageObject {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
     }
-
     @FindBy(xpath = "//input[@formcontrolname='username']")
     private WebElement regUsernameField;
     @FindBy(xpath = "//input[@formcontrolname='email']")
@@ -29,37 +28,15 @@ public class RegistrationPageObject extends BasePageObject {
     private WebElement regPublicInfoField;
     @FindBy(xpath = "//button[@id='sign-in-button']")
     private WebElement regSignInButton;
-
     @FindBy(xpath = "//div[@class='input-filed has-danger']")
     private WebElement textFieldsParentDivDanger;
     @FindBy(xpath = "//div[@class='input-filed has-success']")
     private List<WebElement> textFieldsParentDivSuccess;
-
     @FindBy(xpath = "//div[@aria-label='Username taken']")
     private WebElement usernameTakenToast;
-
-    @FindBy(xpath = "//div[@role='alertdialog']")
-    private WebElement toastMessage;
-
-    public String getToastMessage(){
-        try {
-            WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-            waitToast.until(ExpectedConditions.visibilityOf(toastMessage));
-            return toastMessage.getText();
-        } catch (TimeoutException ex) {
-            return "Toast message not found";
-        }
-    }
     public String getTextFieldsDangerMess(){
         return textFieldsParentDivDanger.getText();
     }
-//    public String getTextFieldsSuccessMess(){
-//        String messagesResult = "";
-//        for (WebElement element : textFieldsParentDivSuccess){
-//            messagesResult = element.getText();
-//        } return messagesResult;
-//
-//    }
     public int getNumSuccessMess(){
         return textFieldsParentDivSuccess.size();
     }
@@ -95,18 +72,14 @@ public class RegistrationPageObject extends BasePageObject {
     }
     public void enterAndValidateUsername(String username) {
         clearAndEnterUsername(username);
-
         String enteredUsername = regUsernameField.getAttribute("value");
         Assert.assertEquals(enteredUsername, username, "Entered username does not match the expected value.");
-
         Assert.assertTrue(isUsernameSuccess() || isUsernameDanger(), "Username field status is unknown.");
-
         if (isUsernameSuccess()) {
             Assert.assertTrue(isUsernameSuccess(), "Username is Valid.");
         } else if (isUsernameDanger()) {
             Assert.assertFalse( isUsernameDanger(), "Username is Invalid.");
         }
-
     }
     public boolean isUsernameSuccess() {
         try {
@@ -129,17 +102,14 @@ public class RegistrationPageObject extends BasePageObject {
         }
     }
     public void testValidUsername() {
-
         String validUser = genRandomUser(20);
         enterAndValidateUsername(validUser);
     }
     public void testInvalidEmailWith21Char(){
-
         String validEmail = genRandomEmail(21);
         clearAndEnterEmail(validEmail);
     }
     public void testValidEmailWith20Characters(){
-
         String validEmail = genRandomEmail(20);
         clearAndEnterEmail(validEmail);
     }
@@ -183,5 +153,4 @@ public class RegistrationPageObject extends BasePageObject {
         regPublicInfoField.clear();
         regPublicInfoField.sendKeys(text);
     }
-
 }

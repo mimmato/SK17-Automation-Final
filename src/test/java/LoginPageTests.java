@@ -1,16 +1,12 @@
 import org.openqa.selenium.WebDriver;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 public class LoginPageTests extends BaseTestConfig {
-
     @Test
     public void loginWithUserAndRememberMe() {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToLoginPage();
-
         LoginPageObject loginPage = new LoginPageObject(driver);
         loginPage.validateLoginElements();
         loginPage.fillUserInfoCheck();
@@ -26,7 +22,7 @@ public class LoginPageTests extends BaseTestConfig {
         Assert.assertEquals(basePage.getToastMessage(), "Successful login!", "Toast message is wrong, you are NOT logged in!");
     }
     @Test
-    public void loginWithEmailAndRememberMe() throws InterruptedException {
+    public void loginWithEmailAndRememberMe() {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToLoginPage();
@@ -46,25 +42,15 @@ public class LoginPageTests extends BaseTestConfig {
         Assert.assertEquals(loginPage.getToastMessage(), "Successful login!", "Toast message is wrong, you are NOT logged in!");
     }
     @Test
-    public void loginWrongUser() throws InterruptedException {
+    public void loginWrongUser() {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.navigateToLoginPage();
-        insertWrongUserAndPass();
-    }
-
-    // the following should probably be in Object!!!!!!
-    public void insertWrongUserAndPass(){
-        WebDriver driver = getDriver();
-        LoginPageObject loginPage = new LoginPageObject(driver);
-        BasePageObject basePage = new BasePageObject(driver);
-
         RegistrationPageObject registrationPage = new RegistrationPageObject(driver);
         String wrongUser = registrationPage.genRandomUser(10);
-
+        LoginPageObject loginPage = new LoginPageObject(driver);
         loginPage.getUsernameOrEmailField().clear();
         loginPage.getUsernameOrEmailField().sendKeys(wrongUser);
-
         loginPage.clearAndEnterPassword();
         loginPage.clickSignIn();
         Assert.assertEquals(basePage.getToastMessage(), "Wrong username or password!", "Toast message is wrong, you are NOT logged in!");
