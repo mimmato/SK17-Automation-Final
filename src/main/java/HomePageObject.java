@@ -79,7 +79,6 @@ public class HomePageObject extends BasePageObject{
         LoginPageObject loginPage = new LoginPageObject(webDriver);
         WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         waitToast.until(ExpectedConditions.invisibilityOf(loginPage.getToastMessageElement()));
-
         commentPlaceholder.sendKeys("Test");
         commentPlaceholder.sendKeys(Keys.ENTER);
         Assert.assertEquals(loginPage.getToastMessage(), "You must login");

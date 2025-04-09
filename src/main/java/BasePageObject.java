@@ -67,19 +67,21 @@ public class BasePageObject {
     public void navigateToRegistrationPage() {
         String uri = "/posts/all";
         openURL(uri);
-        Assert.assertTrue(isCurrentURLCorrect(uri), "The URL did not match the expected Landing page.");
-
+        Assert.assertTrue(
+                isCurrentURLCorrect(uri),
+                "The URL did not match the expected Landing page.");
         clickLoginLink();
-
         LoginPageObject loginPage = new LoginPageObject(webDriver);
         uri = "/users/login";
-        Assert.assertTrue(loginPage.isCurrentURLCorrect(uri), "The URL did not match the expected Login page.");
-
+        Assert.assertTrue(
+                loginPage.isCurrentURLCorrect(uri),
+                "The URL did not match the expected Login page.");
         loginPage.clickRegister();
-
         RegistrationPageObject registrationPage = new RegistrationPageObject(webDriver);
         uri = "/users/register";
-        Assert.assertTrue(registrationPage.isCurrentURLCorrect(uri), "The URL did not match the expected Registration page.");
+        Assert.assertTrue(
+                registrationPage.isCurrentURLCorrect(uri),
+                "The URL did not match the expected Registration page.");
     }
     public void navigateToLoginPage(){
         String uri = "/posts/all";
@@ -87,7 +89,9 @@ public class BasePageObject {
         clickLoginLink();
         LoginPageObject loginPage = new LoginPageObject(webDriver);
         uri = "/users/login";
-        Assert.assertTrue(loginPage.isCurrentURLCorrect(uri), "The URL did not match the expected Login page.");
+        Assert.assertTrue(
+                loginPage.isCurrentURLCorrect(uri),
+                "The URL did not match the expected Login page.");
     }
     public String getProfileLinkText() {
         return profileLink.getText();

@@ -12,7 +12,9 @@ public class RegistrationPageTests extends BaseTestConfig {
         registrationPage.validateFieldsText();
         String longUser = registrationPage.genRandomUser(21);
         registrationPage.clearAndEnterUsername(longUser);
-        Assert.assertTrue(registrationPage.isUsernameDanger(), "Username is less than 20 characters and should be accepted!");
+        Assert.assertTrue(
+                registrationPage.isUsernameDanger(),
+                "Username is less than 20 characters and should be accepted!");
     }
     @Test
     public void failShortUser() {
@@ -23,7 +25,10 @@ public class RegistrationPageTests extends BaseTestConfig {
         registrationPage.validateFieldsText();
         String shortUser = registrationPage.genRandomUser(2);
         registrationPage.clearAndEnterUsername(shortUser);
-        Assert.assertEquals(registrationPage.isUsernameDanger(), registrationPage.isUsernameSuccess(), "Bug detected: " +
+        Assert.assertEquals(
+                registrationPage.isUsernameDanger(),
+                registrationPage.isUsernameSuccess(),
+                "Bug detected: " +
                 "The '" + shortUser + "' user should be accepted due to feedback message: " +
                 registrationPage.getTextFieldsDangerMess());
     }

@@ -41,26 +41,41 @@ public class RegistrationPageObject extends BasePageObject {
         return textFieldsParentDivSuccess.size();
     }
     public void validateFieldsText() {
-        String usernamePlaceholder = regUsernameField.getAttribute("placeholder");
-        Assert.assertEquals(usernamePlaceholder, "Username", "Username field placeholder text is incorrect: " + usernamePlaceholder);
-
-        String emailPlaceholder = regEmailField.getAttribute("placeholder");
-        Assert.assertEquals(emailPlaceholder, "email", "Email field placeholder text is incorrect: " + emailPlaceholder);
-
-        String birthDatePlaceholder = regBirthDateField.getAttribute("placeholder");
-        Assert.assertEquals(birthDatePlaceholder, "Birth date", "Birth Date field placeholder text is incorrect: " + birthDatePlaceholder);
-
-        String passwordPlaceholder = regPasswordField.getAttribute("placeholder");
-        Assert.assertEquals(passwordPlaceholder, "Password", "Password field placeholder text is incorrect: " + passwordPlaceholder);
-
-        String confirmPasswordPlaceholder = regConfirmPasswordField.getAttribute("placeholder");
-        Assert.assertEquals(confirmPasswordPlaceholder, "Confirm Password", "Confirm Password field placeholder text is incorrect: " + confirmPasswordPlaceholder);
-
-        String publicInfoPlaceholder = regPublicInfoField.getAttribute("placeholder");
-        Assert.assertEquals(publicInfoPlaceholder, "Public info", "Public info field placeholder text is incorrect: " + publicInfoPlaceholder);
-
-        String signInButtonText = regSignInButton.getText();
-        Assert.assertEquals(signInButtonText, "Sign in", "Sign in button text is incorrect: " + signInButtonText);
+        validateUsernamePlaceholder();
+        validateEmailPlaceholder();
+        validateBirthDatePlaceholder();
+        validatePasswordPlaceholder();
+        validateConfirmPasswordPlaceholder();
+        validatePublicInfoPlaceholder();
+        validateSignInButtonText();
+    }
+    private void validateUsernamePlaceholder() {
+        String placeholder = regUsernameField.getAttribute("placeholder");
+        Assert.assertEquals(placeholder, "Username", "Username field placeholder text is incorrect: " + placeholder);
+    }
+    private void validateEmailPlaceholder() {
+        String placeholder = regEmailField.getAttribute("placeholder");
+        Assert.assertEquals(placeholder, "email", "Email field placeholder text is incorrect: " + placeholder);
+    }
+    private void validateBirthDatePlaceholder() {
+        String placeholder = regBirthDateField.getAttribute("placeholder");
+        Assert.assertEquals(placeholder, "Birth date", "Birth Date field placeholder text is incorrect: " + placeholder);
+    }
+    private void validatePasswordPlaceholder() {
+        String placeholder = regPasswordField.getAttribute("placeholder");
+        Assert.assertEquals(placeholder, "Password", "Password field placeholder text is incorrect: " + placeholder);
+    }
+    private void validateConfirmPasswordPlaceholder() {
+        String placeholder = regConfirmPasswordField.getAttribute("placeholder");
+        Assert.assertEquals(placeholder, "Confirm Password", "Confirm Password field placeholder text is incorrect: " + placeholder);
+    }
+    private void validatePublicInfoPlaceholder() {
+        String placeholder = regPublicInfoField.getAttribute("placeholder");
+        Assert.assertEquals(placeholder, "Public info", "Public info field placeholder text is incorrect: " + placeholder);
+    }
+    private void validateSignInButtonText() {
+        String text = regSignInButton.getText();
+        Assert.assertEquals(text, "Sign in", "Sign in button text is incorrect: " + text);
     }
     public String genRandomUser(int desiredLength) {
         String randomUsername = UUID.randomUUID().toString().replace("-", "").substring(0, desiredLength);
@@ -95,7 +110,6 @@ public class RegistrationPageObject extends BasePageObject {
         try {
             WebDriverWait waitUserDangerMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
             waitUserDangerMess.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-danger']")));
-//            return usernameParentDivDanger.getText();
             return textFieldsParentDivDanger.getAttribute("class").contains("has-danger");
         } catch (NoSuchElementException | TimeoutException ex) {
             return false;
@@ -124,9 +138,6 @@ public class RegistrationPageObject extends BasePageObject {
     }
     public void clickSignInButton(){
         regSignInButton.click();
-    }
-    public void cleanRegUsernameField(){
-        regUsernameField.clear();
     }
     public String genRandomEmail(int desiredLength){
         String domain = "@t.m";
