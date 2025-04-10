@@ -4,9 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import java.time.Duration;
 public class LoginPageObject extends BasePageObject {
     public LoginPageObject(WebDriver webDriver) {
         super(webDriver);
@@ -30,7 +28,6 @@ public class LoginPageObject extends BasePageObject {
         return usernameOrEmailField;
     }
     public String isRegisterLinkVisible() {
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOf(registerLink));
         if (registerLink.isDisplayed()) {
             return registerLink.getText();
@@ -125,8 +122,7 @@ public class LoginPageObject extends BasePageObject {
         Assert.assertTrue(rememberMeCheckbox.isSelected(), "The Remember me box is NOT checked!");
     }
     public void clickSignIn() {
-        WebDriverWait waitToast = new WebDriverWait(this.webDriver, Duration.ofSeconds(5));
-        waitToast.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@role='alertdialog']")));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@role='alertdialog']")));
         this.signInButton.click();
     }
     public void fillUserInfoCheck(){

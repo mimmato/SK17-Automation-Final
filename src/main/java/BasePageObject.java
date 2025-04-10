@@ -6,7 +6,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import java.time.Duration;
 
 public class BasePageObject {
@@ -26,18 +25,18 @@ public class BasePageObject {
     @FindBy(xpath = "//div[@role='alertdialog']")
     private WebElement toastMessage;
 
-    public static final String CURRENT_URL = "http://training.skillo-bg.com:4300";
-    public final WebDriver webDriver;
+    protected final String CURRENT_URL = "http://training.skillo-bg.com:4300";
+    protected final WebDriver webDriver;
+    protected final WebDriverWait wait;
     private String expectedURL;
     private String actualURL;
-
     public BasePageObject(WebDriver webDriver) {
         this.webDriver = webDriver;
+        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         PageFactory.initElements(this.webDriver, this);
     }
     public boolean isCurrentURLCorrect(String uri) {
         expectedURL = CURRENT_URL + uri;
-        WebDriverWait wait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
         try {
             wait.until(ExpectedConditions.urlToBe(expectedURL));
         } catch (TimeoutException ex) {
@@ -60,8 +59,7 @@ public class BasePageObject {
         webDriver.get(fullURL);
     }
     public void clickLoginLink() {
-        WebDriverWait loginPageLinkWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(3));
-        loginPageLinkWait.until(ExpectedConditions.elementToBeClickable(this.loginLink));
+        wait.until(ExpectedConditions.elementToBeClickable(this.loginLink));
         this.loginLink.click();
     }
     public void navigateToRegistrationPage() {
@@ -113,8 +111,7 @@ public class BasePageObject {
     }
     public WebElement getToastMessageElement(){
         try {
-            WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-            waitToast.until(ExpectedConditions.visibilityOf(toastMessage));
+            wait.until(ExpectedConditions.visibilityOf(toastMessage));
             return toastMessage;
         } catch (TimeoutException ex) {
             return null;
@@ -122,8 +119,7 @@ public class BasePageObject {
     }
     public String getToastMessage(){
         try {
-            WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-            waitToast.until(ExpectedConditions.visibilityOf(toastMessage));
+            wait.until(ExpectedConditions.visibilityOf(toastMessage));
             return toastMessage.getText();
         } catch (TimeoutException ex) {
             return "Toast message not found";

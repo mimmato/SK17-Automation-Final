@@ -2,9 +2,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +32,7 @@ public class RegistrationPageObject extends BasePageObject {
     private List<WebElement> textFieldsParentDivSuccess;
     @FindBy(xpath = "//div[@aria-label='Username taken']")
     private WebElement usernameTakenToast;
+
     public String getTextFieldsDangerMess(){
         return textFieldsParentDivDanger.getText();
     }
@@ -98,18 +97,15 @@ public class RegistrationPageObject extends BasePageObject {
     }
     public boolean isUsernameSuccess() {
         try {
-            WebDriverWait waitUserSuccessMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
-            waitUserSuccessMess.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-success']")));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-success']")));
             return !textFieldsParentDivSuccess.isEmpty();
-
         } catch (NoSuchElementException | TimeoutException ex) {
             return false;
         }
     }
     public boolean isUsernameDanger() {
         try {
-            WebDriverWait waitUserDangerMess = new WebDriverWait(webDriver, Duration.ofSeconds(1));
-            waitUserDangerMess.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-danger']")));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-filed has-danger']")));
             return textFieldsParentDivDanger.getAttribute("class").contains("has-danger");
         } catch (NoSuchElementException | TimeoutException ex) {
             return false;

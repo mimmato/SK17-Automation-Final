@@ -8,14 +8,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
-
 public class BaseTestConfig {
-
     public static final String RESOURCES_DIR = "src/test/resources/";
     public static final String SCREENSHOTS_DIR = RESOURCES_DIR.concat("screenshots/");
     private WebDriver webDriver;
@@ -28,10 +25,8 @@ public class BaseTestConfig {
             WebDriverManager.edgedriver().setup();
         }
         makeScreenshotDIR(SCREENSHOTS_DIR);
-//        delScreenshots();
         deleteScreenshots();
     }
-
     public void makeScreenshotDIR(String SCREENSHOTS_DIR) {
         File directory = new File(SCREENSHOTS_DIR);
         if (!directory.exists()) {
@@ -43,24 +38,6 @@ public class BaseTestConfig {
             }
         }
     }
-//    private void delScreenshotDIR(String SCREENSHOTS_DIR) throws IOException {
-//        File directory = new File(SCREENSHOTS_DIR);
-//        Assert.assertTrue(
-//                directory.isDirectory(),
-//                "Invalid directory");
-//        FileUtils.cleanDirectory(directory);
-//        String[] fileList = directory.list();
-//        if (fileList != null && fileList.length == 0) {
-//            System.out.printf("All files are deleted in Directory: %s%n", SCREENSHOTS_DIR);
-//        } else {
-//            System.out.printf("Unable to delete the files in Directory: %s%n", SCREENSHOTS_DIR);
-//        }
-//    }
-//    protected void delScreenshots() throws IOException {
-//        System.out.println("Attempting to delete old screenshots...");
-//        delScreenshotDIR(SCREENSHOTS_DIR);
-//    }
-
     protected void deleteScreenshots() throws IOException {
         System.out.println("Attempting to delete old screenshots...");
 
@@ -76,7 +53,6 @@ public class BaseTestConfig {
             System.out.printf("Unable to delete the files in Directory: %s%n", SCREENSHOTS_DIR);
         }
     }
-
     private void takeScreenshotOnFailure(ITestResult testResult) {
         if (webDriver == null) {
             System.out.println("WebDriver is null, skipping screenshot.");
@@ -102,8 +78,6 @@ public class BaseTestConfig {
             }
         }
     }
-
-
     @BeforeMethod
     @Parameters("browser")
     public void setBeforeMethod(@Optional("chrome") String browser) {
@@ -117,7 +91,7 @@ public class BaseTestConfig {
         this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
     @AfterMethod
-    protected void tearDownTest(ITestResult testResult) {
+    protected void tearDownMethod(ITestResult testResult) {
         takeScreenshotOnFailure(testResult);
         quitDriver();
     }
@@ -132,10 +106,6 @@ public class BaseTestConfig {
         } else {
             System.out.println("WebDriver is null.");
         }
-    }
-    @AfterSuite
-    public void tearDownSuite() {
-        quitDriver();
     }
 }
 

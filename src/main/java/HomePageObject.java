@@ -2,9 +2,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import java.time.Duration;
 import java.util.List;
 public class HomePageObject extends BasePageObject{
     public HomePageObject(WebDriver webDriver) {
@@ -77,14 +75,12 @@ public class HomePageObject extends BasePageObject{
     }
     public void enterCommentInPostModal() {
         LoginPageObject loginPage = new LoginPageObject(webDriver);
-        WebDriverWait waitToast = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-        waitToast.until(ExpectedConditions.invisibilityOf(loginPage.getToastMessageElement()));
+        wait.until(ExpectedConditions.invisibilityOf(loginPage.getToastMessageElement()));
         commentPlaceholder.sendKeys("Test");
         commentPlaceholder.sendKeys(Keys.ENTER);
         Assert.assertEquals(loginPage.getToastMessage(), "You must login");
     }
     public int checkPostsLoaded() {
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfAllElements(postThumbnails));
         return postThumbnails.size();
     }
@@ -93,8 +89,7 @@ public class HomePageObject extends BasePageObject{
         int scrolls = 0;
         while (scrolls < maxScrolls) {
             bodyScroll.sendKeys(Keys.END);
-            WebDriverWait scrollWait = new WebDriverWait(webDriver, Duration.ofSeconds(3));
-            scrollWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
                     By.className("post-feed-container"), initialCount
             ));
             List<WebElement> updatedPosts = webDriver.findElements(By.className("post-feed-container"));
@@ -108,5 +103,3 @@ public class HomePageObject extends BasePageObject{
         return scrolls;
     }
 }
-
-
