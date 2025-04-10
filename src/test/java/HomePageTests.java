@@ -33,7 +33,7 @@ public class HomePageTests extends BaseTestConfig{
                         + actualPostCount);
     }
     @Test
-    public void checkPostElements() throws InterruptedException {
+    public void checkPostElements() {
         WebDriver driver = getDriver();
         BasePageObject basePage = new BasePageObject(driver);
         basePage.openURL(uriHome);
