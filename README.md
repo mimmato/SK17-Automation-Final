@@ -50,7 +50,8 @@ https://github.com/mimmato/SK17-Automation-Final.git
 ```
 3. Paste the URL into the **URL** field.
 4. Specify the directory where you want to save your project.
-5. Click **Clone**.
+5. Make sure you have git installed on your machine and added to IntelliJ. 
+6. Click **Clone**.
 
 The project will now be cloned to your specified directory, and you can begin testing.
 The project is configured to execute a total of 9 tests within 3 class files in parallel and run in Chrome.
