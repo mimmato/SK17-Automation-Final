@@ -149,22 +149,9 @@ In this case, it executes 3 Test Classes in parallel.
 ```tree
 |   .gitignore
 |   pom.xml
-|   pom_backup.xml
 |   README.md
 |   testng.xml
 |   
-+---.idea
-|   |   .gitignore
-|   |   compiler.xml
-|   |   encodings.xml
-|   |   jarRepositories.xml
-|   |   misc.xml
-|   |   vcs.xml
-|   |   workspace.xml
-|   |
-|   \---libraries
-|           testng.xml
-|
 +---lib
 |       jcommander-1.83.jar
 |       jquery-3.7.1.jar

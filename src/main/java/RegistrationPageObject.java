@@ -22,7 +22,6 @@ public class RegistrationPageObject extends BasePageObject {
     @FindBy(xpath = "//input[@formcontrolname='confirmPassword']")
     private WebElement regConfirmPasswordField;
     @FindBy(xpath = "//textarea[@formcontrolname='publicInfo']")
-    //typo in public in textarea class
     private WebElement regPublicInfoField;
     @FindBy(xpath = "//button[@id='sign-in-button']")
     private WebElement regSignInButton;

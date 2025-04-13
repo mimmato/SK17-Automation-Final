@@ -94,7 +94,7 @@ public class LoginPageObject extends BasePageObject {
         Assert.assertEquals(newPostText, "New post", "New Post option in navigation menu is incorrect: " + newPostText);
     }
     private void validateExitIconDisplayed() {
-        Assert.assertTrue(getExitIconText(), "Exit icon is not displayed!");
+        Assert.assertTrue(isExitIconVisible(), "Exit icon is not displayed!");
     }
     private void validateSearchBarPlaceholder() {
         String searchText = getSearchBarText();

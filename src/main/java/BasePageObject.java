@@ -30,6 +30,12 @@ public class BasePageObject {
     protected final WebDriverWait wait;
     private String expectedURL;
     private String actualURL;
+
+    public static final String URI_HOME = "/posts/all";
+    public static final String URI_LOGIN = "/users/login";
+    public static final String URI_REGISTER = "/users/register";
+
+
     public BasePageObject(WebDriver webDriver) {
         this.webDriver = webDriver;
         this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
@@ -63,32 +69,32 @@ public class BasePageObject {
         this.loginLink.click();
     }
     public void navigateToRegistrationPage() {
-        String uri = "/posts/all";
-        openURL(uri);
+//        String uri = "/posts/all";
+        openURL(URI_HOME);
         Assert.assertTrue(
-                isCurrentURLCorrect(uri),
+                isCurrentURLCorrect(URI_HOME),
                 "The URL did not match the expected Landing page.");
         clickLoginLink();
         LoginPageObject loginPage = new LoginPageObject(webDriver);
-        uri = "/users/login";
+//        uri = "/users/login";
         Assert.assertTrue(
-                loginPage.isCurrentURLCorrect(uri),
+                loginPage.isCurrentURLCorrect(URI_LOGIN),
                 "The URL did not match the expected Login page.");
         loginPage.clickRegister();
         RegistrationPageObject registrationPage = new RegistrationPageObject(webDriver);
-        uri = "/users/register";
+//        uri = "/users/register";
         Assert.assertTrue(
-                registrationPage.isCurrentURLCorrect(uri),
+                registrationPage.isCurrentURLCorrect(URI_REGISTER),
                 "The URL did not match the expected Registration page.");
     }
     public void navigateToLoginPage(){
-        String uri = "/posts/all";
-        openURL(uri);
+//        String uri = "/posts/all";
+        openURL(URI_HOME);
         clickLoginLink();
         LoginPageObject loginPage = new LoginPageObject(webDriver);
-        uri = "/users/login";
+//        uri = "/users/login";
         Assert.assertTrue(
-                loginPage.isCurrentURLCorrect(uri),
+                loginPage.isCurrentURLCorrect(URI_LOGIN),
                 "The URL did not match the expected Login page.");
     }
     public String getProfileLinkText() {
@@ -100,7 +106,7 @@ public class BasePageObject {
     public String getNewPostLinkText() {
         return newPostLink.getText();
     }
-    public boolean getExitIconText() {
+    public boolean isExitIconVisible() {
         return logoutIcon.isDisplayed();
     }
     public String getSearchBarText() {
@@ -126,4 +132,3 @@ public class BasePageObject {
         }
     }
 }
-
