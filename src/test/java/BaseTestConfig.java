@@ -17,13 +17,7 @@ public class BaseTestConfig {
     public static final String SCREENSHOTS_DIR = RESOURCES_DIR.concat("screenshots/");
     private WebDriver webDriver;
     @BeforeSuite
-    @Parameters("browser")
-    public void setBeforeSuite(@Optional("chrome") String browser) throws IOException {
-        if (browser.equalsIgnoreCase("chrome")) {
-            WebDriverManager.chromedriver().setup();
-        } else if (browser.equalsIgnoreCase("edge")) {
-            WebDriverManager.edgedriver().setup();
-        }
+    public void setBeforeSuite () throws IOException {
         makeScreenshotDIR(SCREENSHOTS_DIR);
         deleteScreenshots();
     }
@@ -102,7 +96,7 @@ public class BaseTestConfig {
         if (this.webDriver != null) {
             this.webDriver.quit();
             this.webDriver = null;
-            Assert.assertNull(this.webDriver, "WebDriver should be null after quitting.");
+//            Assert.assertNull(this.webDriver, "WebDriver should be null after quitting.");
         } else {
             System.out.println("WebDriver is null.");
         }
