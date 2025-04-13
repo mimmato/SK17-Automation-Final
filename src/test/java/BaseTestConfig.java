@@ -1,4 +1,3 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -34,12 +33,9 @@ public class BaseTestConfig {
     }
     protected void deleteScreenshots() throws IOException {
         System.out.println("Attempting to delete old screenshots...");
-
         File directory = new File(SCREENSHOTS_DIR);
         Assert.assertTrue(directory.isDirectory(), "Invalid directory");
-
         FileUtils.cleanDirectory(directory);
-
         String[] fileList = directory.list();
         if (fileList != null && fileList.length == 0) {
             System.out.printf("All files are deleted in Directory: %s%n", SCREENSHOTS_DIR);
@@ -60,7 +56,6 @@ public class BaseTestConfig {
                 }
                 TakesScreenshot takeScreenshot = (TakesScreenshot) webDriver;
                 File screenshot = takeScreenshot.getScreenshotAs(OutputType.FILE);
-
                 String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
                 String testName = testResult.getName() + "_" + timestamp;
                 testName = testName.replaceAll("[^a-zA-Z0-9_-]", "_");
@@ -96,7 +91,6 @@ public class BaseTestConfig {
         if (this.webDriver != null) {
             this.webDriver.quit();
             this.webDriver = null;
-//            Assert.assertNull(this.webDriver, "WebDriver should be null after quitting.");
         } else {
             System.out.println("WebDriver is null.");
         }
